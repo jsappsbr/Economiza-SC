@@ -14,3 +14,17 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+### Commands
+
+- Build runner
+
+```bash
+flutter pub run build_runner watch --delete-conflicting-outputs
+```
+
+- Run Flutter web with html renderer (fix cors)
+
+```bash
+flutter run -d chrome --web-renderer html
+```

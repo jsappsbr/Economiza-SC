@@ -20,7 +20,12 @@ class AuthService {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('api_token', response.data['token']);
 
-    response = await api.get('/user');
+    return fetchCurrentUser();
+  }
+
+  Future<User> fetchCurrentUser() async {
+    final api = Modular.get<Dio>();
+    final response = await api.get('/user');
     return User.fromJson(response.data);
   }
 
@@ -29,6 +34,11 @@ class AuthService {
     await api.delete('/sanctum/token');
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('api_token');
+  }
+
+  Future<String?> getApiToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('api_token');
   }
 
   Future<String> _getDeviceName() async {

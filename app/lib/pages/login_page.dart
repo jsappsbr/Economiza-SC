@@ -1,5 +1,6 @@
 import 'package:anotei/stores/auth_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class LoginPage extends StatelessWidget {
@@ -28,6 +29,10 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    if (_authStore.isFetchingCurrentUser) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return Form(
       key: _formKey,
       child: Padding(
@@ -58,13 +63,25 @@ class _LoginFormState extends State<LoginForm> {
 
                   return null;
                 }),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: ElevatedButton(
-                onPressed: () => _handleSubmit(context),
-                child: const Text('Entrar'),
-              ),
-            ),
+            Observer(builder: (_) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: ElevatedButton(
+                  onPressed: () => _authStore.isAuthenticating
+                      ? null
+                      : _handleSubmit(context),
+                  child: _authStore.isAuthenticating
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Text('Entrar'),
+                ),
+              );
+            })
           ],
         ),
       ),
