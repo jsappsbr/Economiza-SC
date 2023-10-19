@@ -23,8 +23,8 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final _authStore = Modular.get<AuthStore>();
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController(text: 'test@email.com');
-  final _passwordController = TextEditingController(text: '123456789');
+  final _emailController = TextEditingController(text: 'test@test.com');
+  final _passwordController = TextEditingController(text: 'password');
 
   @override
   Widget build(BuildContext context) {

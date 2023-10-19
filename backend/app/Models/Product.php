@@ -19,9 +19,9 @@ class Product extends Model
         'sku',
     ];
 
-//    protected $casts = [
-//        'price' => 'float',
-//    ];
+    protected $casts = [
+        'price' => 'double',
+    ];
 
     public function store(): BelongsTo
     {
