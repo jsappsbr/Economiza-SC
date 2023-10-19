@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Product;
 use App\Models\Store;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -12,6 +13,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 
 class RunScraper implements ShouldQueue
 {
@@ -32,9 +34,9 @@ class RunScraper implements ShouldQueue
      */
     public function handle(): void
     {
-/*         Log::info('Running scraper');
-        Process::forever()->run('node resources/js/scraper/supermercadoKoch.js');
-        Log::info('Scraper finished'); */
+        /*         Log::info('Running scraper');
+                Process::forever()->run('node resources/js/scraper/supermercadoKoch.js');
+                Log::info('Scraper finished'); */
 
         $koch = Store::supermercadoKoch();
 
@@ -45,6 +47,11 @@ class RunScraper implements ShouldQueue
 
         foreach ($products as $product) {
             $now = now();
+
+            $pictureUrl = $product['picture'];
+            $pictureUrl = $pictureUrl ? explode("?", $pictureUrl)[0] : null;
+
+            $product['picture'] = $pictureUrl;
             $product['created_at'] = $now;
             $product['updated_at'] = $now;
             $product['store_id'] = $koch->id;
@@ -53,4 +60,19 @@ class RunScraper implements ShouldQueue
 
         Log::info('Products saved!');
     }
+
+//    private function downloadImage(Product $product, string $url): void
+//    {
+//        $url = explode("?", $url)[0];
+//
+//        $response = Http::get($url);
+//        $contents = $response->body();
+//
+//        $path = "products/$product->id/image.jpg";
+//
+//        Storage::disk('local')->put($path, $contents);
+//
+//        $product->picture = url($path);
+//        $product->save();
+//    }
 }
