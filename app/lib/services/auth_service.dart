@@ -24,6 +24,12 @@ class AuthService {
     return User.fromJson(response.data);
   }
 
+  Future<void> logout() async {
+    final api = Modular.get<Dio>();
+    await api.delete('/sanctum/token');
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('api_token');
+  }
 
   Future<String> _getDeviceName() async {
     final deviceInfo = DeviceInfoPlugin();

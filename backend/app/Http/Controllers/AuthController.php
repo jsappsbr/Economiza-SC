@@ -33,4 +33,11 @@ class AuthController extends Controller
 
         return response()->json(['token' => $token]);
     }
+
+    public function revokeToken(Request $request): JsonResponse
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json(['message' => 'Token revoked']);
+    }
 }
