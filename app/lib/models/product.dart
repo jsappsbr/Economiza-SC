@@ -18,7 +18,7 @@ class Product {
   Product.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     name = map['name'];
-    price = map['price'];
+    price = map['price'].toDouble();
     picture = map['picture'];
     link = map['link'];
     sku = map['sku'];
