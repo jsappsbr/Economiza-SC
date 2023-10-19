@@ -32,9 +32,9 @@ class RunScraper implements ShouldQueue
      */
     public function handle(): void
     {
-//        Log::info('Running scraper');
-//        Process::forever()->run('node resources/js/scraper/supermercadoKoch.js');
-//        Log::info('Scraper finished');
+        Log::info('Running scraper');
+        Process::forever()->run('node resources/js/scraper/supermercadoKoch.js');
+        Log::info('Scraper finished');
 
         $koch = Store::supermercadoKoch();
 
