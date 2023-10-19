@@ -1,7 +1,7 @@
 class Product {
   late int id;
   late String name;
-  late String price;
+  late double price;
   late String picture;
   late String link;
   late String sku;

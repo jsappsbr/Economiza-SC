@@ -12,6 +12,7 @@ class AppWidget extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       title: 'Basic App',
       routerConfig: Modular.routerConfig,
     ); //added by extension
