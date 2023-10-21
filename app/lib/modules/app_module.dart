@@ -34,7 +34,7 @@ class AppModule extends Module {
           String? token = prefs.getString('api_token');
 
           if (token != null && token.isNotEmpty) {
-            options.headers['Authorization'] = 'Bearer ${token}';
+            options.headers['Authorization'] = 'Bearer $token';
           }
 
           return handler.next(options);

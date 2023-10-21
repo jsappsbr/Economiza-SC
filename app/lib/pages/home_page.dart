@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                     return ListTile(
                       trailing: Text(
                         product.price.toString(),
-                        style: TextStyle(color: Colors.green, fontSize: 15),
+                        style: const TextStyle(color: Colors.green, fontSize: 15),
                       ),
                       title: Text(product.name),
                       subtitle: Image.network(product.picture),

@@ -5,8 +5,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       // appBar: AppBar(title: const Text('Login')),
       body: LoginForm(),
     );
