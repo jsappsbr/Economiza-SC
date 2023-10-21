@@ -30,47 +30,45 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    if (_authStore.isFetchingCurrentUser) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    return Form(
-      key: _formKey,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextFormField(
-              controller: _emailController,
-              decoration: const InputDecoration(hintText: 'E-mail'),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Campo obrigatório';
-                }
-
-                return null;
-              },
-            ),
-            TextFormField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(hintText: 'Senha'),
+    return Observer(builder: (_) {
+      if (_authStore.isFetchingCurrentUser) {
+        return const Center(child: CircularProgressIndicator());
+      }
+      
+      return Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: _emailController,
+                decoration: const InputDecoration(hintText: 'E-mail'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Campo obrigatório';
                   }
 
                   return null;
-                }),
-            Observer(builder: (_) {
-              return Padding(
+                },
+              ),
+              TextFormField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(hintText: 'Senha'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Campo obrigatório';
+                    }
+
+                    return null;
+                  }),
+              Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: ElevatedButton(
-                  onPressed: () => _authStore.isAuthenticating
-                      ? null
-                      : _handleSubmit(context),
+                  onPressed: () => _authStore.isAuthenticating ? null : _handleSubmit(context),
                   child: _authStore.isAuthenticating
                       ? const SizedBox(
                           width: 24,
@@ -81,12 +79,12 @@ class _LoginFormState extends State<LoginForm> {
                         )
                       : const Text('Entrar'),
                 ),
-              );
-            })
-          ],
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   _handleSubmit(BuildContext context) {
