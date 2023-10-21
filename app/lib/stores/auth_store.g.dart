@@ -25,19 +25,36 @@ mixin _$AuthStore on AuthStoreBase, Store {
     });
   }
 
-  late final _$isLoadingAtom =
-      Atom(name: 'AuthStoreBase.isLoading', context: context);
+  late final _$isAuthenticatingAtom =
+      Atom(name: 'AuthStoreBase.isAuthenticating', context: context);
 
   @override
-  bool get isLoading {
-    _$isLoadingAtom.reportRead();
-    return super.isLoading;
+  bool get isAuthenticating {
+    _$isAuthenticatingAtom.reportRead();
+    return super.isAuthenticating;
   }
 
   @override
-  set isLoading(bool value) {
-    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
-      super.isLoading = value;
+  set isAuthenticating(bool value) {
+    _$isAuthenticatingAtom.reportWrite(value, super.isAuthenticating, () {
+      super.isAuthenticating = value;
+    });
+  }
+
+  late final _$isFetchingCurrentUserAtom =
+      Atom(name: 'AuthStoreBase.isFetchingCurrentUser', context: context);
+
+  @override
+  bool get isFetchingCurrentUser {
+    _$isFetchingCurrentUserAtom.reportRead();
+    return super.isFetchingCurrentUser;
+  }
+
+  @override
+  set isFetchingCurrentUser(bool value) {
+    _$isFetchingCurrentUserAtom.reportWrite(value, super.isFetchingCurrentUser,
+        () {
+      super.isFetchingCurrentUser = value;
     });
   }
 
@@ -64,11 +81,28 @@ mixin _$AuthStore on AuthStoreBase, Store {
     return _$loginAsyncAction.run(() => super.login(email, password));
   }
 
+  late final _$fetchCurrentUserAsyncAction =
+      AsyncAction('AuthStoreBase.fetchCurrentUser', context: context);
+
+  @override
+  Future fetchCurrentUser() {
+    return _$fetchCurrentUserAsyncAction.run(() => super.fetchCurrentUser());
+  }
+
+  late final _$logoutAsyncAction =
+      AsyncAction('AuthStoreBase.logout', context: context);
+
+  @override
+  Future<void> logout() {
+    return _$logoutAsyncAction.run(() => super.logout());
+  }
+
   @override
   String toString() {
     return '''
 isLogged: ${isLogged},
-isLoading: ${isLoading},
+isAuthenticating: ${isAuthenticating},
+isFetchingCurrentUser: ${isFetchingCurrentUser},
 user: ${user}
     ''';
   }

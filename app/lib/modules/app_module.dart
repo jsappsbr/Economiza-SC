@@ -1,4 +1,5 @@
 import 'package:anotei/guards/auth_guard.dart';
+import 'package:anotei/services/auth_service.dart';
 import 'package:anotei/stores/auth_store.dart';
 import 'package:anotei/stores/products_store.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -7,11 +8,11 @@ import 'package:anotei/pages/login_page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:io';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AppModule extends Module {
   @override
   void binds(i) {
+    i.addSingleton<AuthService>(() => AuthService());
     i.addSingleton<AuthStore>(() => AuthStore());
     i.addSingleton<ProductsStore>(() => ProductsStore());
     i.addSingleton<Dio>(() {
@@ -30,8 +31,7 @@ class AppModule extends Module {
 
       dio.interceptors.add(InterceptorsWrapper(
         onRequest: (options, handler) async {
-          final prefs = await SharedPreferences.getInstance();
-          String? token = prefs.getString('api_token');
+          String? token = await Modular.get<AuthService>().getApiToken();
 
           if (token != null && token.isNotEmpty) {
             options.headers['Authorization'] = 'Bearer $token';
