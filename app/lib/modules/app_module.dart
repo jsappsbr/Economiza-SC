@@ -34,7 +34,7 @@ class AppModule extends Module {
           String? token = await Modular.get<AuthService>().getApiToken();
 
           if (token != null && token.isNotEmpty) {
-            options.headers['Authorization'] = 'Bearer ${token}';
+            options.headers['Authorization'] = 'Bearer $token';
           }
 
           return handler.next(options);

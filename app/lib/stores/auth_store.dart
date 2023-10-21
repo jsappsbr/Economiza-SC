@@ -1,7 +1,6 @@
 import 'package:anotei/services/auth_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-
 import '../models/user.dart';
 
 part 'auth_store.g.dart';
