@@ -1,5 +1,5 @@
-import 'package:anotei/stores/auth_store.dart';
 import 'package:anotei/stores/products_store.dart';
+import 'package:anotei/widgets/popup_menu_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -12,7 +12,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _authStore = Modular.get<AuthStore>();
   final _productsStore = Modular.get<ProductsStore>();
   final _searchController = TextEditingController();
 
@@ -29,11 +28,8 @@ class _HomePageState extends State<HomePage> {
         title: const Center(
           child: Text('Home Page'),
         ),
-        actions: [
-          IconButton(
-            onPressed: () => _authStore.logout(),
-            icon: const Icon(Icons.logout),
-          )
+        actions: const [
+          CustomPopUpMenu(),
         ],
       ),
       floatingActionButton: FloatingActionButton(
