@@ -2,10 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Models\Product;
 use App\Models\Store;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -13,7 +11,6 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Http;
 
 class RunScraper implements ShouldQueue
 {
@@ -21,58 +18,45 @@ class RunScraper implements ShouldQueue
 
     public $timeout = 60 * 60; // 1 hour
 
-    /**
-     * Create a new job instance.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
-        /*         Log::info('Running scraper');
-                Process::forever()->run('node resources/js/scraper/supermercadoKoch.js');
-                Log::info('Scraper finished'); */
+        Log::info('Running scraper');
+        $processResult = Process::forever()->run('npm run scraper:supermercado-koch');
 
-        $koch = Store::supermercadoKoch();
+        if ($processResult->successful()) {
+            Log::info('Scraper finished successfully');
+        } else {
+            $this->fail("Scraper failed: " . $processResult->output());
+        }
 
-        $rawJson = Storage::get('scraper/products.json');
-        $products = json_decode($rawJson, true, depth: JSON_THROW_ON_ERROR);
+        Log::info('Scraper finished');
 
-        Log::info("Upserting " . count($products) . " products");
+        $rawJson = Storage::get('scraper/supermercado_koch_products.json');
+        $allProducts = json_decode($rawJson, true, flags: JSON_THROW_ON_ERROR);
 
-        foreach ($products as $product) {
-            $now = now();
+        foreach ($allProducts as $storeCode => $products) {
+            $store = Store::query()->where('code', $storeCode)->firstOrFail();
 
-            $pictureUrl = $product['picture'];
-            $pictureUrl = $pictureUrl ? explode("?", $pictureUrl)[0] : null;
+            Log::info("Saving " . count($products) . " products for store $store->name");
 
-            $product['picture'] = $pictureUrl;
-            $product['created_at'] = $now;
-            $product['updated_at'] = $now;
-            $product['store_id'] = $koch->id;
-            $koch->products()->updateOrCreate(['sku' => $product['sku']], $product);
+            foreach ($products as $product) {
+                $now = now();
+
+                $pictureUrl = $product['picture'];
+                $pictureUrl = $pictureUrl ? explode("?", $pictureUrl)[0] : null;
+
+                $product['picture'] = $pictureUrl;
+                $product['created_at'] = $now;
+                $product['updated_at'] = $now;
+                $product['store_id'] = $store->id;
+
+                $store->products()->updateOrCreate(
+                    ['sku' => $product['sku'], 'store_id' => $store->id],
+                    $product
+                );
+            }
         }
 
         Log::info('Products saved!');
     }
-
-//    private function downloadImage(Product $product, string $url): void
-//    {
-//        $url = explode("?", $url)[0];
-//
-//        $response = Http::get($url);
-//        $contents = $response->body();
-//
-//        $path = "products/$product->id/image.jpg";
-//
-//        Storage::disk('local')->put($path, $contents);
-//
-//        $product->picture = url($path);
-//        $product->save();
-//    }
 }
