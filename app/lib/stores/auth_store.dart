@@ -1,4 +1,5 @@
 import 'package:anotei/services/auth_service.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import '../models/user.dart';
@@ -36,7 +37,7 @@ abstract class AuthStoreBase with Store {
 
       Modular.to.navigate('/');
     } catch (e) {
-      print("Login falhou: $e");
+      debugPrint("Login falhou: $e");
     } finally {
       isAuthenticating = false;
     }
@@ -57,7 +58,7 @@ abstract class AuthStoreBase with Store {
         Modular.to.navigate('/');
       }
     } catch (e) {
-      print("Erro ao buscar usuário logado: $e");
+      debugPrint("Erro ao buscar usuário logado: $e");
     } finally {
       isFetchingCurrentUser = false;
     }
@@ -71,7 +72,7 @@ abstract class AuthStoreBase with Store {
       user = null;
       Modular.to.navigate('/login');
     } catch (e) {
-      print("Logout falhou: $e");
+      debugPrint("Logout falhou: $e");
     }
   }
 }
