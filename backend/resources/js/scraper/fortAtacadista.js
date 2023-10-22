@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer";
 import fs from "node:fs";
 
-(async () => {
+const run = async () => {
     const browser = await puppeteer.launch({
         headless: false,
         devtools: false,
@@ -35,7 +35,7 @@ import fs from "node:fs";
     fs.writeFileSync('storage/app/scraper/fort_atacadista_products.json', JSON.stringify(allProducts, null, 2))
 
     await browser.close();
-})();
+}
 
 async function scrapeProducts(browser, pageLink) {
     console.info(`Scraping ${pageLink}`)
@@ -93,10 +93,10 @@ async function scrapeProducts(browser, pageLink) {
 
     }
 
-    // await new Promise(resolve => setTimeout(resolve, 100000))
-
     await page.close()
 
 
     return allProducts
 }
+
+export default run
