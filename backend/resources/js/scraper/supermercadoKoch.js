@@ -4,16 +4,23 @@ import fs from 'node:fs';
 // Got from the stores modal select that shows up when a
 // new browser is opened and the store is not defined yet
 const STORES_SELECT_VALUES = {
+    // Itapema e Região
     TIJUCAS: 'website_lj9',
     ITAPEMA: 'website_lj9',
     PORTO_BELO: 'website_lj9',
+
+    // Itajaí e Região
     CAMBORIU: 'website_lj5',
     ITAJAI: 'website_lj5',
     BALNEARIO_CAMBORIU: 'website_lj5',
+
+    // Penha e Região
     BARRA_VELHA: 'website_lj23',
     PENHA: 'website_lj23',
     PICARRAS: 'website_lj23',
+
     FLORIANOPOLIS: 'website_lj47',
+
     NAVEGANTES: 'website_lj44',
 };
 
@@ -28,7 +35,7 @@ const ALL_PAGES = [
     'https://www.superkoch.com.br/outros'
 ];
 
-(async () => {
+const run = async () => {
     const browser = await puppeteer.launch({
         headless: 'new',
         devtools: false,
@@ -39,17 +46,24 @@ const ALL_PAGES = [
     const allProducts = {}
 
     for (const initialPageLink of ALL_PAGES) {
-        allProducts[initialPageLink] = {}
-
         for (const storeValue of [...new Set(Object.values(STORES_SELECT_VALUES))]) {
-            allProducts[initialPageLink][storeValue] = await scrapeProducts(browser, initialPageLink, storeValue)
+            if (!allProducts[storeValue]) {
+                allProducts[storeValue] = []
+            }
+
+            const products = await scrapeProducts(browser, initialPageLink, storeValue)
+
+            allProducts[storeValue] = [...products, ...allProducts[storeValue]]
         }
     }
 
     await browser.close();
 
-    fs.writeFileSync('storage/app/scraper/products.json', JSON.stringify(allProducts, null, 2))
-})();
+    fs.writeFileSync(
+        'storage/app/scraper/supermercado_koch_products.json',
+        JSON.stringify(allProducts, null, 2)
+    )
+}
 
 async function scrapeProducts(browser, pageLink, storeValue) {
     const allProducts = []
@@ -105,3 +119,5 @@ async function scrapeProducts(browser, pageLink, storeValue) {
 
     return allProducts
 }
+
+export default run
