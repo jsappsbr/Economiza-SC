@@ -2,9 +2,11 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "scraper:supermercado-koch": "node resources/js/scraper/supermercadoKoch.js"
+        "scraper": "node resources/js/scraper/index.js",
+        "scraper:supermercado-koch": "node resources/js/scraper/index.js supermercado-koch"
     },
     "dependencies": {
+        "commander": "^11.1.0",
         "puppeteer": "^21.3.8"
     }
 }
