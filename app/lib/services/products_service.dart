@@ -10,8 +10,9 @@ class ProductsService {
       'search': search,
     });
 
-    final data = response.data as List;
+    final data = response.data as Map<String, dynamic>;
+    final rawProducts = data['data'] as List<dynamic>;
 
-    return data.map((e) => Product.fromMap(e)).toList();
+    return rawProducts.map((e) => Product.fromMap(e)).toList();
   }
 }
