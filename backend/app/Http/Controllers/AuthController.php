@@ -40,4 +40,21 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Token revoked']);
     }
+
+    public function signup(Request $request): JsonResponse
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users|max:255',
+            'password' => 'required|string|confirmed|min:8|max:255',
+        ]);
+
+        User::query()->create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+
+        return response()->json(['message' => 'User created'], 201);
+    }
 }
