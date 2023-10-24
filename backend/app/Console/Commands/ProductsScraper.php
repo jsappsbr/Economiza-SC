@@ -34,7 +34,7 @@ class ProductsScraper extends Command
         if ($processResult->successful()) {
             Log::info('Scraper finished successfully');
         } else {
-            $this->fail("Scraper failed: " . $processResult->output());
+            throw new \DomainException("Scraper failed: " . $processResult->output());
         }
 
         Log::info('Scraper finished');
