@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class LogoWidget extends StatelessWidget {
-  const LogoWidget({super.key, required this.customAsset});
+  const LogoWidget({super.key, required this.assetPath});
 
-  final String customAsset;
+  final String assetPath;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class LogoWidget extends StatelessWidget {
       backgroundColor: Colors.white,
       radius: 120,
       child: Image.asset(
-        customAsset,
+        assetPath,
         fit: BoxFit.cover,
       ),
     );

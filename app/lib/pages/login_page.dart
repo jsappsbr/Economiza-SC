@@ -1,7 +1,6 @@
 import 'package:anotei/stores/auth_store.dart';
 import 'package:anotei/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class LoginPage extends StatelessWidget {
@@ -10,7 +9,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      // appBar: AppBar(title: const Text('Login')),
       body: Center(child: LoginForm()),
     );
   }
@@ -31,11 +29,6 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (_) {
-      if (_authStore.isFetchingCurrentUser) {
-        return const CircularProgressIndicator();
-      }
-
       return ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 400),
         child: Form(
@@ -45,7 +38,7 @@ class _LoginFormState extends State<LoginForm> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const LogoWidget(customAsset: 'assets/images/logo_anotei_round.png'),
+                const LogoWidget(assetPath: 'assets/images/logo_anotei_round.png'),
                 TextFormField(
                   controller: _emailController,
                   decoration: const InputDecoration(hintText: 'E-mail'),
@@ -88,7 +81,6 @@ class _LoginFormState extends State<LoginForm> {
           ),
         ),
       );
-    });
   }
 
   _handleSubmit(BuildContext context) {
