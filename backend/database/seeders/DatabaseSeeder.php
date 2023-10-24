@@ -45,12 +45,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Store::factory()->create([
-            'name' => 'Supermercado Koch - Florianópolis Ilha',
-            'website' => 'https://www.superkoch.com.br',
-            'code' => 'website_lj47',
-        ]);
-
-        Store::factory()->create([
             'name' => 'Supermercado Koch - Navegantes',
             'website' => 'https://www.superkoch.com.br',
             'code' => 'website_lj44',
