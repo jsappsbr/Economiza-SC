@@ -1,26 +1,34 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Console\Commands;
 
 use App\Models\Store;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
 
-class RunScraper implements ShouldQueue
+class ProductsScraper extends Command
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    protected $signature = 'app:products-scraper {--skip-scraper} {--skip-save}';
+    protected $description = 'Scrape products from all stores and save them to the database';
 
-    public $timeout = 60 * 60; // 1 hour
 
     public function handle(): void
     {
+        $this->scrapeProducts();
+        $this->saveScrapedProducts();
+    }
+
+    private function scrapeProducts(): void
+    {
+        if ($this->option('skip-scraper')) {
+            Log::info('Skipping scraper');
+            return;
+        }
+
         Log::info('Running scraper');
+
         $processResult = Process::forever()->run('npm run scraper:supermercado-koch');
 
         if ($processResult->successful()) {
@@ -30,6 +38,15 @@ class RunScraper implements ShouldQueue
         }
 
         Log::info('Scraper finished');
+    }
+
+
+    private function saveScrapedProducts(): void
+    {
+        if ($this->option('skip-save')) {
+            Log::info('Skipping saving products');
+            return;
+        }
 
         $rawJson = Storage::get('scraper/supermercado_koch_products.json');
         $allProducts = json_decode($rawJson, true, flags: JSON_THROW_ON_ERROR);
