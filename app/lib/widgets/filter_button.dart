@@ -12,12 +12,13 @@ class FilterButton extends StatefulWidget {
 }
 
 class _FilterButtonState extends State<FilterButton> {
+
   final storesStore = Modular.get<StoresStore>();
   List<store.Store> storeList = [];
   List<String> storeNames = [];
 
   void _loadStoreData() {
-    storesStore.fetchStores('').then((stores) {
+    storesStore.fetchStores().then((stores) {
       setState(() {
         storeList = stores;
         storeNames = storesStore.extractStoreNames(storeList);
@@ -26,7 +27,7 @@ class _FilterButtonState extends State<FilterButton> {
   }
 
   Future<void> _showMultiSelectModal() async {
-    if (storeList.isNotEmpty) {
+    if (storeNames.isNotEmpty) {
       await showDialog<List<String>>(
         context: context,
         builder: (context) {
@@ -34,11 +35,10 @@ class _FilterButtonState extends State<FilterButton> {
         },
       ).then((selectedItems) {
         if (selectedItems != null) {
-          print('Selected items: $selectedItems'); // Temporary
+          print('Selected items: $selectedItems'); 
         }
       });
     } else {
-      print('showMultiSelectModal print is $storeList');
     }
   }
 

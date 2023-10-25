@@ -7,14 +7,16 @@ part 'stores_store.g.dart';
 class StoresStore = StoresStoreBase with _$StoresStore;
 
 abstract class StoresStoreBase with Store {
+
   @observable
   ObservableList<store.Store> stores = ObservableList<store.Store>();
 
+  @observable
+  //implementar
+
   @action
-  Future<List<store.Store>> fetchStores(String search) async {
-    final searchResult = await StoresService().search(search);
-    searchResult.clear();
-    searchResult.addAll(searchResult);
+  Future<List<store.Store>> fetchStores() async {
+    final searchResult = await StoresService().search();
     return searchResult;
   }
 

@@ -29,8 +29,9 @@ mixin _$StoresStore on StoresStoreBase, Store {
       AsyncAction('StoresStoreBase.fetchStores', context: context);
 
   @override
-  Future<List<store.Store>> fetchStores(String search) {
-    return _$fetchStoresAsyncAction.run(() => super.fetchStores(search));
+  ObservableFuture<List<store.Store>> fetchStores() {
+    return ObservableFuture<List<store.Store>>(
+        _$fetchStoresAsyncAction.run(() => super.fetchStores()));
   }
 
   late final _$StoresStoreBaseActionController =
