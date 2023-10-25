@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/sanctum/token', [AuthController::class, 'requestToken']);
+Route::post('signup', [AuthController::class, 'signup']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::delete('/sanctum/token', [AuthController::class, 'revokeToken']);
