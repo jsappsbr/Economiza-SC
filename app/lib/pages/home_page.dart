@@ -1,4 +1,5 @@
 import 'package:anotei/stores/products_store.dart';
+import 'package:anotei/widgets/filter_button.dart';
 import 'package:anotei/widgets/popup_menu_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -12,6 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   final _productsStore = Modular.get<ProductsStore>();
   final _searchController = TextEditingController();
 
@@ -40,12 +42,21 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 24),
-            child: Observer(
-              builder: (_) => TextFormField(
-                controller: _searchController,
-                decoration: const InputDecoration(hintText: 'Digite sua busca'),
+          Observer(
+            builder: (_) => Padding(
+              padding: const EdgeInsets.fromLTRB(10,5,10,24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _searchController,
+                      decoration: const InputDecoration(hintText: 'Digite sua busca'),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  const FilterButton(),
+                ],
               ),
             ),
           ),
@@ -55,7 +66,6 @@ class _HomePageState extends State<HomePage> {
                   itemCount: _productsStore.products.length,
                   itemBuilder: (BuildContext context, int index) {
                     final product = _productsStore.products[index];
-
                     return ListTile(
                       trailing: Text(
                         product.price.toString(),

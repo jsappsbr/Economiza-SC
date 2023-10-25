@@ -11,8 +11,8 @@ abstract class ProductsStoreBase with Store {
   ObservableList<Product> products = ObservableList<Product>();
 
   @action
-  fetchProducts(String search) async {
-    final searchResult = await ProductsService().search(search);
+  fetchProducts(String search, {List<int>? storeIds}) async {
+    final searchResult = await ProductsService().search(search, storeIds: storeIds);
     products.clear();
     products.addAll(searchResult);
   }

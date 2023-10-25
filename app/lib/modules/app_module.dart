@@ -2,6 +2,7 @@ import 'package:anotei/guards/auth_guard.dart';
 import 'package:anotei/services/auth_service.dart';
 import 'package:anotei/stores/auth_store.dart';
 import 'package:anotei/stores/products_store.dart';
+import 'package:anotei/stores/stores_store.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:anotei/pages/home_page.dart';
 import 'package:anotei/pages/login_page.dart';
@@ -15,6 +16,7 @@ class AppModule extends Module {
     i.addSingleton<AuthService>(() => AuthService());
     i.addSingleton<AuthStore>(() => AuthStore());
     i.addSingleton<ProductsStore>(() => ProductsStore());
+    i.addSingleton<StoresStore>(() => StoresStore());
     i.addSingleton<Dio>(() {
       String baseUrl = '';
 
