@@ -1,6 +1,5 @@
 import 'package:anotei/stores/filters_store.dart';
 import 'package:anotei/stores/markets_store.dart';
-import 'package:anotei/stores/products_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -15,7 +14,6 @@ class MultiSelectModal extends StatefulWidget {
 class _MultiSelectModalState extends State<MultiSelectModal> {
   final filtersStore = Modular.get<FiltersStore>();
   final marketsStore = Modular.get<MarketsStore>();
-  final productsStore = Modular.get<ProductsStore>();
 
   @override
   void initState() {
@@ -23,7 +21,7 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
   }
 
   void cancelSelection() {
-    Navigator.pop(context, null);
+    Navigator.pop(context);
   }
 
   void submitSelection() async {
@@ -37,13 +35,16 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
         title: const Text('Selecione as opções desejadas'),
         content: SingleChildScrollView(
           child: ListBody(
-            children: marketsStore.marketNames
+            children: marketsStore.markets
                 .map((item) => CheckboxListTile(
-                      value: filtersStore.selectedMarketNames.contains(item),
+                      value: filtersStore.selectedMarkets.contains(item),
                       onChanged: (isSelected) {
-                        filtersStore.changeSelectedMarketNames(item, isSelected!);
+                        filtersStore.changeSelectedMarketNames(item.name, isSelected!);
+                        filtersStore.changeSelectedMarketIds(item.id, isSelected);
+                        print(filtersStore.selectedMarketNames);
+                        print(filtersStore.selectedMarketIds);
                       },
-                      title: Text(item),
+                      title: Text(item.name),
                     ))
                 .toList(),
           ),

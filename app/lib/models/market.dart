@@ -19,7 +19,7 @@ class Market {
     return {
       'id': id,
       'name': name,
-      'website' : website,
+      'website': website,
     };
   }
 }

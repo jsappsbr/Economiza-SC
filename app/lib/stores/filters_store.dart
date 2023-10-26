@@ -34,6 +34,15 @@ abstract class FiltersStoreBase with Store {
   }
 
   @action
+  changeSelectedMarketIds(int marketId, bool isSelected) {
+    if (isSelected) {
+      selectedMarketIds.add(marketId);
+    } else {
+      selectedMarketIds.remove(marketId);
+    }
+  }
+
+  @action
   extractSelectedMarketNames() {
     List<String> extractedNames = selectedMarkets.map((market) => market.name).toList();
     selectedMarketNames.addAll(extractedNames);

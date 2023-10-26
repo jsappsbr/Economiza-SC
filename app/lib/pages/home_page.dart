@@ -1,4 +1,4 @@
-import 'package:anotei/stores/markets_store.dart';
+import 'package:anotei/stores/filters_store.dart';
 import 'package:anotei/stores/products_store.dart';
 import 'package:anotei/widgets/filter_button.dart';
 import 'package:anotei/widgets/popup_menu_widget.dart';
@@ -14,15 +14,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   final _productsStore = Modular.get<ProductsStore>();
-  final marketsStore = Modular.get<MarketsStore>();
+  final filtersStore = Modular.get<FiltersStore>();
   final _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _productsStore.fetchProducts('', marketIds: marketsStore.marketIds);
+    _productsStore.fetchProducts('', marketIds: filtersStore.selectedMarketIds);
   }
 
   @override
@@ -38,7 +37,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _productsStore.fetchProducts(_searchController.text);
+          _productsStore.fetchProducts(_searchController.text, marketIds: filtersStore.selectedMarketIds);
         },
         child: const Icon(Icons.search),
       ),
@@ -46,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Observer(
             builder: (_) => Padding(
-              padding: const EdgeInsets.fromLTRB(10,5,10,24),
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 24),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [

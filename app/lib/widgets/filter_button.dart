@@ -1,4 +1,3 @@
-import 'package:anotei/stores/filters_store.dart';
 import 'package:anotei/stores/markets_store.dart';
 import 'package:anotei/widgets/multi_select_modal.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +11,8 @@ class FilterButton extends StatefulWidget {
 }
 
 class _FilterButtonState extends State<FilterButton> {
+
   final marketsStore = Modular.get<MarketsStore>();
-  final filtersStore = Modular.get<FiltersStore>();
 
   @override
   void initState() {
