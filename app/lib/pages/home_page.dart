@@ -1,3 +1,4 @@
+import 'package:anotei/stores/markets_store.dart';
 import 'package:anotei/stores/products_store.dart';
 import 'package:anotei/widgets/filter_button.dart';
 import 'package:anotei/widgets/popup_menu_widget.dart';
@@ -15,12 +16,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   final _productsStore = Modular.get<ProductsStore>();
+  final marketsStore = Modular.get<MarketsStore>();
   final _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _productsStore.fetchProducts('');
+    _productsStore.fetchProducts('', marketIds: marketsStore.marketIds);
   }
 
   @override
