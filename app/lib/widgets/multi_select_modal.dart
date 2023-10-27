@@ -17,13 +17,13 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
   final marketsStore = Modular.get<MarketsStore>();
   final productsStore = Modular.get<ProductsStore>();
 
-  void clearSelection() {
-    filtersStore.selectedMarketIds.clear();
-    filtersStore.selectedMarketNames.clear();
+  void _clearSelection() {
+    filtersStore.selectedMarkets.clear();
     Navigator.pop(context);
   }
 
-  void submitSelection() async {
+  void _submitSelection() async {
+    productsStore.fetchProducts('', marketIds: filtersStore.extractMarketIds());
     Navigator.pop(context);
   }
 
@@ -31,7 +31,7 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
       return AlertDialog(
-        title: const Text('Selecione as opções desejadas'),
+        title: const Text('Selecione as opções desejadas:'),
         content: SingleChildScrollView(
           child: ListBody(
             children: marketsStore.markets
@@ -40,8 +40,6 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
                       onChanged: (newValue) {
                         if (newValue != null) {
                           filtersStore.changeSelectedMarkets(item, newValue);
-                          filtersStore.changeSelectedMarketIds(item.id, newValue);
-                          print(productsStore.products.length);
                         }
                       },
                       title: Text(item.name),
@@ -51,11 +49,12 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
         ),
         actions: <Widget>[
           ElevatedButton(
-            onPressed: clearSelection,
+            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.grey)),
+            onPressed: _clearSelection,
             child: const Text('Limpar Seleção'),
           ),
           ElevatedButton(
-            onPressed: submitSelection,
+            onPressed: _submitSelection,
             child: const Text('Confirmar'),
           ),
         ],

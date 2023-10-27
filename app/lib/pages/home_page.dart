@@ -41,44 +41,44 @@ class _HomePageState extends State<HomePage> {
         },
         child: const Icon(Icons.search),
       ),
-      body: Column(
-        children: [
-          Observer(
-            builder: (_) => Padding(
-              padding: const EdgeInsets.fromLTRB(10, 5, 10, 24),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: _searchController,
-                      decoration: const InputDecoration(hintText: 'Digite sua busca'),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  const FilterButton(),
-                ],
-              ),
-            ),
-          ),
-          Observer(
-            builder: (_) => Expanded(
-              child: ListView.builder(
-                  itemCount: _productsStore.products.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final product = _productsStore.products[index];
-                    return ListTile(
-                      trailing: Text(
-                        product.price.toString(),
-                        style: const TextStyle(color: Colors.green, fontSize: 15),
+      body: Observer(
+        builder: (context) {
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 5, 10, 24),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: _searchController,
+                        decoration: const InputDecoration(hintText: 'Digite sua busca'),
                       ),
-                      title: Text(product.name),
-                      subtitle: Image.network(product.picture),
-                    );
-                  }),
-            ),
-          )
-        ],
+                    ),
+                    const SizedBox(width: 10),
+                    const FilterButton(),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                    itemCount: _productsStore.products.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final product = _productsStore.products[index];
+                      return ListTile(
+                        trailing: Text(
+                          product.price.toString(),
+                          style: const TextStyle(color: Colors.green, fontSize: 15),
+                        ),
+                        title: Text(product.name),
+                        subtitle: Image.network(product.picture),
+                      );
+                    }),
+              )
+            ],
+          );
+        }
       ),
     );
   }

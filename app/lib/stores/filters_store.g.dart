@@ -72,28 +72,6 @@ mixin _$FiltersStore on FiltersStoreBase, Store {
   }
 
   @override
-  dynamic changeSelectedMarketNames(String marketName, bool isSelected) {
-    final _$actionInfo = _$FiltersStoreBaseActionController.startAction(
-        name: 'FiltersStoreBase.changeSelectedMarketNames');
-    try {
-      return super.changeSelectedMarketNames(marketName, isSelected);
-    } finally {
-      _$FiltersStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic changeSelectedMarketIds(int marketId, bool isSelected) {
-    final _$actionInfo = _$FiltersStoreBaseActionController.startAction(
-        name: 'FiltersStoreBase.changeSelectedMarketIds');
-    try {
-      return super.changeSelectedMarketIds(marketId, isSelected);
-    } finally {
-      _$FiltersStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic extractSelectedMarketNames() {
     final _$actionInfo = _$FiltersStoreBaseActionController.startAction(
         name: 'FiltersStoreBase.extractSelectedMarketNames');
