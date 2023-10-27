@@ -6,6 +6,7 @@ part 'filters_store.g.dart';
 class FiltersStore = FiltersStoreBase with _$FiltersStore;
 
 abstract class FiltersStoreBase with Store {
+
   @observable
   ObservableList<Market> selectedMarkets = ObservableList<Market>();
 
@@ -15,9 +16,10 @@ abstract class FiltersStoreBase with Store {
   @observable
   ObservableList<int> selectedMarketIds = ObservableList<int>();
 
+
   @action
   changeSelectedMarkets(Market market, bool isSelected) {
-    if (isSelected) {
+    if (isSelected == true) {
       selectedMarkets.add(market);
     } else {
       selectedMarkets.remove(market);
@@ -26,7 +28,7 @@ abstract class FiltersStoreBase with Store {
 
   @action
   changeSelectedMarketNames(String marketName, bool isSelected) {
-    if (isSelected) {
+    if (isSelected == true) {
       selectedMarketNames.add(marketName);
     } else {
       selectedMarketNames.remove(marketName);
@@ -35,7 +37,7 @@ abstract class FiltersStoreBase with Store {
 
   @action
   changeSelectedMarketIds(int marketId, bool isSelected) {
-    if (isSelected) {
+    if (isSelected == true) {
       selectedMarketIds.add(marketId);
     } else {
       selectedMarketIds.remove(marketId);

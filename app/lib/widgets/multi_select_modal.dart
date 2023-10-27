@@ -1,5 +1,6 @@
 import 'package:anotei/stores/filters_store.dart';
 import 'package:anotei/stores/markets_store.dart';
+import 'package:anotei/stores/products_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -14,13 +15,11 @@ class MultiSelectModal extends StatefulWidget {
 class _MultiSelectModalState extends State<MultiSelectModal> {
   final filtersStore = Modular.get<FiltersStore>();
   final marketsStore = Modular.get<MarketsStore>();
+  final productsStore = Modular.get<ProductsStore>();
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void cancelSelection() {
+  void clearSelection() {
+    filtersStore.selectedMarketIds.clear();
+    filtersStore.selectedMarketNames.clear();
     Navigator.pop(context);
   }
 
@@ -38,11 +37,12 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
             children: marketsStore.markets
                 .map((item) => CheckboxListTile(
                       value: filtersStore.selectedMarkets.contains(item),
-                      onChanged: (isSelected) {
-                        filtersStore.changeSelectedMarketNames(item.name, isSelected!);
-                        filtersStore.changeSelectedMarketIds(item.id, isSelected);
-                        print(filtersStore.selectedMarketNames);
-                        print(filtersStore.selectedMarketIds);
+                      onChanged: (newValue) {
+                        if (newValue != null) {
+                          filtersStore.changeSelectedMarkets(item, newValue);
+                          filtersStore.changeSelectedMarketIds(item.id, newValue);
+                          print(productsStore.products.length);
+                        }
                       },
                       title: Text(item.name),
                     ))
@@ -51,8 +51,8 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
         ),
         actions: <Widget>[
           ElevatedButton(
-            onPressed: cancelSelection,
-            child: const Text('Cancelar'),
+            onPressed: clearSelection,
+            child: const Text('Limpar Seleção'),
           ),
           ElevatedButton(
             onPressed: submitSelection,

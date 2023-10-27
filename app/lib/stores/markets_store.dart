@@ -7,6 +7,7 @@ part 'markets_store.g.dart';
 class MarketsStore = MarketsStoreBase with _$MarketsStore;
 
 abstract class MarketsStoreBase with Store {
+  
   @observable
   ObservableList<Market> markets = ObservableList<Market>();
 
