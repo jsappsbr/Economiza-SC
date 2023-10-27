@@ -21,65 +21,68 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _productsStore.fetchProducts('', marketIds: filtersStore.selectedMarketIds);
+    _loadObservables();
+  }
+
+  Future<void> _loadObservables() async {
+    await _productsStore.fetchProducts('', marketIds: filtersStore.selectedMarketIds);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text('Home Page'),
+    return Observer(builder: (context) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Center(
+            child: Text('Home Page'),
+          ),
+          actions: const [
+            CustomPopUpMenu(),
+          ],
         ),
-        actions: const [
-          CustomPopUpMenu(),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _productsStore.fetchProducts(_searchController.text, marketIds: filtersStore.selectedMarketIds);
-        },
-        child: const Icon(Icons.search),
-      ),
-      body: Observer(
-        builder: (context) {
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 24),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _searchController,
-                        decoration: const InputDecoration(hintText: 'Digite sua busca'),
-                      ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _productsStore.fetchProducts(_searchController.text, marketIds: filtersStore.selectedMarketIds);
+            
+          },
+          child: const Icon(Icons.search),
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _searchController,
+                      decoration: const InputDecoration(hintText: 'Digite sua busca'),
                     ),
-                    const SizedBox(width: 10),
-                    const FilterButton(),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: 10),
+                  const FilterButton(),
+                ],
               ),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: _productsStore.products.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final product = _productsStore.products[index];
-                      return ListTile(
-                        trailing: Text(
-                          product.price.toString(),
-                          style: const TextStyle(color: Colors.green, fontSize: 15),
-                        ),
-                        title: Text(product.name),
-                        subtitle: Image.network(product.picture),
-                      );
-                    }),
-              )
-            ],
-          );
-        }
-      ),
-    );
+            ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: _productsStore.products.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final product = _productsStore.products[index];
+                    return ListTile(
+                      trailing: Text(
+                        product.price.toString(),
+                        style: const TextStyle(color: Colors.green, fontSize: 15),
+                      ),
+                      title: Text(product.name),
+                      subtitle: Image.network(product.picture),
+                    );
+                  }),
+            )
+          ],
+        ),
+      );
+    });
   }
 }

@@ -13,6 +13,7 @@ class MultiSelectModal extends StatefulWidget {
 }
 
 class _MultiSelectModalState extends State<MultiSelectModal> {
+  
   final filtersStore = Modular.get<FiltersStore>();
   final marketsStore = Modular.get<MarketsStore>();
   final productsStore = Modular.get<ProductsStore>();

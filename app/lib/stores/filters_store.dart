@@ -6,6 +6,7 @@ part 'filters_store.g.dart';
 class FiltersStore = FiltersStoreBase with _$FiltersStore;
 
 abstract class FiltersStoreBase with Store {
+  
   @observable
   ObservableList<Market> selectedMarkets = ObservableList<Market>();
 
