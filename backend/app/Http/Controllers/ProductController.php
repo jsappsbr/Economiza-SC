@@ -17,6 +17,7 @@ class ProductController extends Controller
             ->when($search, fn($query) => $query->where('name', 'like', "%{$search}%"))
             ->when($storeIds, fn($query) => $query->whereIn('store_id', $storeIds))
             ->limit(200)
+            ->orderBy('name')
             ->get();
 
         return response()->json($products);

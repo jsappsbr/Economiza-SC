@@ -13,21 +13,11 @@ class FilterButton extends StatefulWidget {
 }
 
 class _FilterButtonState extends State<FilterButton> {
-  final marketsStore = Modular.get<MarketsStore>();
-  final filtersStore = Modular.get<FiltersStore>();
-
-  @override
-  void initState() {
-    super.initState();
-    _loadObservables();
-  }
-
-  Future<void> _loadObservables() async {
-    await marketsStore.fetchMarkets();
-  }
+  final _marketsStore = Modular.get<MarketsStore>();
+  final _filtersStore = Modular.get<FiltersStore>();
 
   Future<void> _showMultiSelectModal() async {
-    if (marketsStore.markets.isNotEmpty) {
+    if (_marketsStore.markets.isNotEmpty) {
       await showDialog<List<String>>(
         context: context,
         builder: (context) {
@@ -42,7 +32,7 @@ class _FilterButtonState extends State<FilterButton> {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
-      return filtersStore.selectedMarkets.isEmpty
+      return _filtersStore.selectedMarkets.isEmpty
           ? ElevatedButton(
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.grey)),
               onPressed: () => _showMultiSelectModal(),
@@ -56,9 +46,9 @@ class _FilterButtonState extends State<FilterButton> {
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
               onPressed: () => _showMultiSelectModal(),
               child: Row(children: [
-                Text(filtersStore.selectedMarkets.length.toString()),
+                Text(_filtersStore.selectedMarkets.length.toString()),
                 const SizedBox(width: 5),
-                filtersStore.selectedMarkets.length == 1 ? const Text('Mercado') : const Text('Mercados')
+                _filtersStore.selectedMarkets.length == 1 ? const Text('Mercado') : const Text('Mercados')
               ]),
             );
     });

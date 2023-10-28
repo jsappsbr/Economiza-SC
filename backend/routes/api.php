@@ -22,7 +22,7 @@ Route::post('signup', [AuthController::class, 'signup']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::delete('/sanctum/token', [AuthController::class, 'revokeToken']);
-    Route::get('/products', [ProductController::class, 'index']);
+    Route::post('/products/search', [ProductController::class, 'index']);
     Route::get('/stores', [StoreController::class, 'index']);
     Route::get('/user', function (Request $request) {
         return $request->user();

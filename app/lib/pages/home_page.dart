@@ -1,4 +1,5 @@
 import 'package:anotei/stores/filters_store.dart';
+import 'package:anotei/stores/markets_store.dart';
 import 'package:anotei/stores/products_store.dart';
 import 'package:anotei/widgets/filter_button.dart';
 import 'package:anotei/widgets/popup_menu_widget.dart';
@@ -16,11 +17,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _productsStore = Modular.get<ProductsStore>();
   final _filtersStore = Modular.get<FiltersStore>();
+  final _marketsStore = Modular.get<MarketsStore>();
 
   @override
   void initState() {
     super.initState();
     _productsStore.fetchProducts();
+    _marketsStore.fetchMarkets();
   }
 
   @override
@@ -63,14 +66,32 @@ class _HomePageState extends State<HomePage> {
                   itemCount: _productsStore.products.length,
                   itemBuilder: (BuildContext context, int index) {
                     final product = _productsStore.products[index];
-                    return ListTile(
-                      trailing: Text(
-                        product.price.toString(),
-                        style:
-                            const TextStyle(color: Colors.green, fontSize: 15),
+
+                    return Card(
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  product.name,
+                                  style: const TextStyle(fontSize: 20),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  "R\$ ${product.price.toStringAsFixed(2)}",
+                                  style: const TextStyle(
+                                      color: Colors.green, fontSize: 15),
+                                ),
+                              ],
+                            ),
+                            Text(_getProductMarketName(product.marketId)),
+                            Image.network(product.picture),
+                          ],
+                        ),
                       ),
-                      title: Text(product.name),
-                      subtitle: Image.network(product.picture),
                     );
                   }),
             )
@@ -78,5 +99,12 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     });
+  }
+
+  String _getProductMarketName(int marketId) {
+    final market =
+        _marketsStore.markets.firstWhere((market) => market.id == marketId);
+
+    return market.name;
   }
 }
