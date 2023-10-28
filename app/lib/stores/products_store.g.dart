@@ -29,9 +29,8 @@ mixin _$ProductsStore on ProductsStoreBase, Store {
       AsyncAction('ProductsStoreBase.fetchProducts', context: context);
 
   @override
-  Future fetchProducts(String search, {List<int>? marketIds}) {
-    return _$fetchProductsAsyncAction
-        .run(() => super.fetchProducts(search, marketIds: marketIds));
+  Future fetchProducts() {
+    return _$fetchProductsAsyncAction.run(() => super.fetchProducts());
   }
 
   @override

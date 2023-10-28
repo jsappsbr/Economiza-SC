@@ -15,17 +15,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _productsStore = Modular.get<ProductsStore>();
-  final filtersStore = Modular.get<FiltersStore>();
-  final _searchController = TextEditingController();
+  final _filtersStore = Modular.get<FiltersStore>();
 
   @override
   void initState() {
     super.initState();
-    _loadObservables();
-  }
-
-  Future<void> _loadObservables() async {
-    await _productsStore.fetchProducts('', marketIds: filtersStore.selectedMarketIds);
+    _productsStore.fetchProducts();
   }
 
   @override
@@ -34,17 +29,14 @@ class _HomePageState extends State<HomePage> {
       return Scaffold(
         appBar: AppBar(
           title: const Center(
-            child: Text('Home Page'),
+            child: Text('Anotei'),
           ),
           actions: const [
             CustomPopUpMenu(),
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            _productsStore.fetchProducts(_searchController.text, marketIds: filtersStore.selectedMarketIds);
-            
-          },
+          onPressed: _productsStore.fetchProducts,
           child: const Icon(Icons.search),
         ),
         body: Column(
@@ -56,8 +48,9 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      controller: _searchController,
-                      decoration: const InputDecoration(hintText: 'Digite sua busca'),
+                      decoration:
+                          const InputDecoration(hintText: 'Digite sua busca'),
+                      onChanged: _filtersStore.updateSearch,
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -73,7 +66,8 @@ class _HomePageState extends State<HomePage> {
                     return ListTile(
                       trailing: Text(
                         product.price.toString(),
-                        style: const TextStyle(color: Colors.green, fontSize: 15),
+                        style:
+                            const TextStyle(color: Colors.green, fontSize: 15),
                       ),
                       title: Text(product.name),
                       subtitle: Image.network(product.picture),

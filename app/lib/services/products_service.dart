@@ -6,7 +6,7 @@ class ProductsService {
   Future<List<Product>> search(String search, {List<int>? marketIds}) async {
     final api = Modular.get<Dio>();
 
-    final response = await api.get('/products', queryParameters: {
+    final response = await api.post('/products/search', data: {
       'search': search,
       'store_ids': marketIds,
     });

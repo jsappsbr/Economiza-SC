@@ -13,18 +13,21 @@ class MultiSelectModal extends StatefulWidget {
 }
 
 class _MultiSelectModalState extends State<MultiSelectModal> {
-  
-  final filtersStore = Modular.get<FiltersStore>();
-  final marketsStore = Modular.get<MarketsStore>();
-  final productsStore = Modular.get<ProductsStore>();
+  final _filtersStore = Modular.get<FiltersStore>();
+  final _marketsStore = Modular.get<MarketsStore>();
+  final _productsStore = Modular.get<ProductsStore>();
 
   void _clearSelection() {
-    filtersStore.selectedMarkets.clear();
-    Navigator.pop(context);
+    _filtersStore.selectedMarkets.clear();
+    _closeModal();
   }
 
   void _submitSelection() async {
-    productsStore.fetchProducts('', marketIds: filtersStore.extractMarketIds());
+    _productsStore.fetchProducts();
+    _closeModal();
+  }
+
+  void _closeModal() {
     Navigator.pop(context);
   }
 
@@ -32,15 +35,27 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
       return AlertDialog(
-        title: const Text('Selecione as opções desejadas:'),
+        title: Row(
+          children: [
+            const Text(
+              'Selecione as opções desejadas:',
+              style: TextStyle(fontSize: 14),
+            ),
+            const Spacer(),
+            IconButton(
+              onPressed: _closeModal,
+              icon: const Icon(Icons.clear),
+            ),
+          ],
+        ),
         content: SingleChildScrollView(
           child: ListBody(
-            children: marketsStore.markets
+            children: _marketsStore.markets
                 .map((item) => CheckboxListTile(
-                      value: filtersStore.selectedMarkets.contains(item),
+                      value: _filtersStore.selectedMarkets.contains(item),
                       onChanged: (newValue) {
                         if (newValue != null) {
-                          filtersStore.changeSelectedMarkets(item, newValue);
+                          _filtersStore.changeSelectedMarkets(item, newValue);
                         }
                       },
                       title: Text(item.name),
@@ -50,7 +65,8 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
         ),
         actions: <Widget>[
           ElevatedButton(
-            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.grey)),
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.grey)),
             onPressed: _clearSelection,
             child: const Text('Limpar Seleção'),
           ),
