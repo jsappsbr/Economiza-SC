@@ -74,16 +74,19 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  product.name,
-                                  style: const TextStyle(fontSize: 20),
+                                Flexible(
+                                  child: Text(
+                                    product.name,
+                                    style: const TextStyle(fontSize: 18),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
-                                const Spacer(),
                                 Text(
                                   "R\$ ${product.price.toStringAsFixed(2)}",
                                   style: const TextStyle(
-                                      color: Colors.green, fontSize: 15),
+                                      color: Colors.green, fontSize: 14),
                                 ),
                               ],
                             ),
