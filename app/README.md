@@ -20,7 +20,7 @@ samples, guidance on mobile development, and a full API reference.
 - Build runner
 
 ```bash
-flutter pub run build_runner watch --delete-conflicting-outputs
+dart run build_runner watch --delete-conflicting-outputs
 ```
 
 - Run Flutter web with html renderer (fix cors)
