@@ -66,6 +66,7 @@ class _HomePageState extends State<HomePage> {
                   itemCount: _productsStore.products.length,
                   itemBuilder: (BuildContext context, int index) {
                     final product = _productsStore.products[index];
+                    final marketName = _getProductMarketName(product.marketId);
 
                     return Card(
                       child: Container(
@@ -90,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                             ),
-                            Text(_getProductMarketName(product.marketId)),
+                            Text(marketName),
                             Image.network(product.picture),
                           ],
                         ),
@@ -105,9 +106,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   String _getProductMarketName(int marketId) {
-    final market =
-        _marketsStore.markets.firstWhere((market) => market.id == marketId);
+    for (final market in _marketsStore.markets) {
+      if (market.id == marketId) {
+        return market.name;
+      }
+    }
 
-    return market.name;
+    return '';
   }
 }
