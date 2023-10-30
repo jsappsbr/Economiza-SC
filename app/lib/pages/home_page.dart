@@ -3,6 +3,7 @@ import 'package:anotei/stores/markets_store.dart';
 import 'package:anotei/stores/products_store.dart';
 import 'package:anotei/widgets/filter_button.dart';
 import 'package:anotei/widgets/popup_menu_widget.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -66,7 +67,8 @@ class _HomePageState extends State<HomePage> {
                   itemCount: _productsStore.products.length,
                   itemBuilder: (BuildContext context, int index) {
                     final product = _productsStore.products[index];
-                    final marketName = _getProductMarketName(product.marketId);
+                    final market = _marketsStore.markets.firstWhereOrNull(
+                        (market) => market.id == product.marketId);
 
                     return Card(
                       child: Container(
@@ -91,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                             ),
-                            Text(marketName),
+                            Text(market?.name ?? ''),
                             Image.network(product.picture),
                           ],
                         ),
@@ -103,15 +105,5 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     });
-  }
-
-  String _getProductMarketName(int marketId) {
-    for (final market in _marketsStore.markets) {
-      if (market.id == marketId) {
-        return market.name;
-      }
-    }
-
-    return '';
   }
 }
