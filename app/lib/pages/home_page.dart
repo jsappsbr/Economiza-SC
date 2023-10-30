@@ -1,4 +1,7 @@
+import 'package:anotei/stores/filters_store.dart';
+import 'package:anotei/stores/markets_store.dart';
 import 'package:anotei/stores/products_store.dart';
+import 'package:anotei/widgets/filter_button.dart';
 import 'package:anotei/widgets/popup_menu_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -13,62 +16,102 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _productsStore = Modular.get<ProductsStore>();
-  final _searchController = TextEditingController();
+  final _filtersStore = Modular.get<FiltersStore>();
+  final _marketsStore = Modular.get<MarketsStore>();
 
   @override
   void initState() {
     super.initState();
-    _productsStore.fetchProducts('');
+    _productsStore.fetchProducts();
+    _marketsStore.fetchMarkets();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text('Home Page'),
+    return Observer(builder: (context) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Center(
+            child: Text('Anotei'),
+          ),
+          actions: const [
+            CustomPopUpMenu(),
+          ],
         ),
-        actions: const [
-          CustomPopUpMenu(),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _productsStore.fetchProducts(_searchController.text);
-        },
-        child: const Icon(Icons.search),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 24),
-            child: Observer(
-              builder: (_) => TextFormField(
-                controller: _searchController,
-                decoration: const InputDecoration(hintText: 'Digite sua busca'),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _productsStore.fetchProducts,
+          child: const Icon(Icons.search),
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      decoration:
+                          const InputDecoration(hintText: 'Digite sua busca'),
+                      onChanged: _filtersStore.updateSearch,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  const FilterButton(),
+                ],
               ),
             ),
-          ),
-          Observer(
-            builder: (_) => Expanded(
+            Expanded(
               child: ListView.builder(
                   itemCount: _productsStore.products.length,
                   itemBuilder: (BuildContext context, int index) {
                     final product = _productsStore.products[index];
+                    final marketName = _getProductMarketName(product.marketId);
 
-                    return ListTile(
-                      trailing: Text(
-                        product.price.toString(),
-                        style: const TextStyle(color: Colors.green, fontSize: 15),
+                    return Card(
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    product.name,
+                                    style: const TextStyle(fontSize: 18),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Text(
+                                  "R\$ ${product.price.toStringAsFixed(2)}",
+                                  style: const TextStyle(
+                                      color: Colors.green, fontSize: 14),
+                                ),
+                              ],
+                            ),
+                            Text(marketName),
+                            Image.network(product.picture),
+                          ],
+                        ),
                       ),
-                      title: Text(product.name),
-                      subtitle: Image.network(product.picture),
                     );
                   }),
-            ),
-          )
-        ],
-      ),
-    );
+            )
+          ],
+        ),
+      );
+    });
+  }
+
+  String _getProductMarketName(int marketId) {
+    for (final market in _marketsStore.markets) {
+      if (market.id == marketId) {
+        return market.name;
+      }
+    }
+
+    return '';
   }
 }

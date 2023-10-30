@@ -18,6 +18,7 @@ class ProductController extends Controller
         $products = Product::query()
             ->when($search, fn($query) => $query->where('name', 'like', "%{$search}%"))
             ->when($storeIds, fn($query) => $query->whereIn('store_id', $storeIds))
+            ->orderBy('name')
             ->simplePaginate($perPage, page: $page);
 
         return response()->json($products);
