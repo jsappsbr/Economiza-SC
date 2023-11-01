@@ -18,11 +18,13 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
   final _productsStore = Modular.get<ProductsStore>();
 
   void _clearSelection() {
+    _productsStore.page = 1;
     _filtersStore.selectedMarkets.clear();
     _closeModal();
   }
 
   void _submitSelection() async {
+    _productsStore.page = 1;
     _productsStore.fetchProducts();
     _closeModal();
   }
@@ -65,8 +67,7 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
         ),
         actions: <Widget>[
           ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.grey)),
+            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.grey)),
             onPressed: _clearSelection,
             child: const Text('Limpar Seleção'),
           ),

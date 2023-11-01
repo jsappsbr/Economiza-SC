@@ -19,16 +19,27 @@ class _HomePageState extends State<HomePage> {
   final _productsStore = Modular.get<ProductsStore>();
   final _filtersStore = Modular.get<FiltersStore>();
   final _marketsStore = Modular.get<MarketsStore>();
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _productsStore.fetchProducts();
     _marketsStore.fetchMarkets();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    _scrollController.addListener(
+        () => _scrollController.position.pixels >= (0.9 * _scrollController.position.maxScrollExtent) ? _productsStore.fetchProducts() : null);
+
     return Observer(builder: (context) {
       return Scaffold(
         appBar: AppBar(
@@ -52,8 +63,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      decoration:
-                          const InputDecoration(hintText: 'Digite sua busca'),
+                      decoration: const InputDecoration(hintText: 'Digite sua busca'),
                       onChanged: _filtersStore.updateSearch,
                     ),
                   ),
@@ -64,41 +74,49 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: _productsStore.products.length,
+                  controller: _scrollController,
+                  itemCount: _productsStore.products.length + 1,
                   itemBuilder: (BuildContext context, int index) {
-                    final product = _productsStore.products[index];
-                    final market = _marketsStore.markets.firstWhereOrNull(
-                        (market) => market.id == product.marketId);
-
-                    return Card(
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    product.name,
-                                    style: const TextStyle(fontSize: 18),
-                                    overflow: TextOverflow.ellipsis,
+                    if (index < _productsStore.products.length) {
+                      final product = _productsStore.products[index];
+                      final market = _marketsStore.markets.firstWhereOrNull((market) => market.id == product.marketId);
+                      return Card(
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      product.name,
+                                      style: const TextStyle(fontSize: 18),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  "R\$ ${product.price.toStringAsFixed(2)}",
-                                  style: const TextStyle(
-                                      color: Colors.green, fontSize: 14),
-                                ),
-                              ],
-                            ),
-                            Text(market?.name ?? ''),
-                            Image.network(product.picture),
-                          ],
+                                  Text(
+                                    "R\$ ${product.price.toStringAsFixed(2)}",
+                                    style: const TextStyle(color: Colors.green, fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                              Text(market?.name ?? ''),
+                              Image.network(product.picture),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    } else {
+                      return const Center(
+                        child: SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                      );
+                    }
                   }),
             )
           ],
