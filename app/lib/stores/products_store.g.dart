@@ -25,22 +25,6 @@ mixin _$ProductsStore on ProductsStoreBase, Store {
     });
   }
 
-  late final _$isLastPageAtom =
-      Atom(name: 'ProductsStoreBase.isLastPage', context: context);
-
-  @override
-  bool get isLastPage {
-    _$isLastPageAtom.reportRead();
-    return super.isLastPage;
-  }
-
-  @override
-  set isLastPage(bool value) {
-    _$isLastPageAtom.reportWrite(value, super.isLastPage, () {
-      super.isLastPage = value;
-    });
-  }
-
   late final _$pageAtom =
       Atom(name: 'ProductsStoreBase.page', context: context);
 
@@ -101,7 +85,6 @@ mixin _$ProductsStore on ProductsStoreBase, Store {
   String toString() {
     return '''
 products: ${products},
-isLastPage: ${isLastPage},
 page: ${page},
 productsPerPage: ${productsPerPage},
 productsLoading: ${productsLoading}

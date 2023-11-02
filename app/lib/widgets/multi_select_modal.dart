@@ -6,7 +6,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class MultiSelectModal extends StatefulWidget {
-  const MultiSelectModal({Key? key}) : super(key: key);
+  const MultiSelectModal({Key? key, required this.scrollController}) : super(key: key);
+
+  final ScrollController scrollController;
 
   @override
   State<MultiSelectModal> createState() => _MultiSelectModalState();
@@ -17,16 +19,29 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
   final _marketsStore = Modular.get<MarketsStore>();
   final _productsStore = Modular.get<ProductsStore>();
 
+  void _scrollToTop() {
+    widget.scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
+
   void _clearSelection() {
     _productsStore.page = 1;
     _filtersStore.selectedMarkets.clear();
+    _productsStore.products.clear();
+    _productsStore.fetchProducts();
     _closeModal();
+    _scrollToTop();
   }
 
   void _submitSelection() async {
     _productsStore.page = 1;
+    _productsStore.products.clear();
     _productsStore.fetchProducts();
     _closeModal();
+    _scrollToTop();
   }
 
   void _closeModal() {

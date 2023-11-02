@@ -16,20 +16,17 @@ abstract class ProductsStoreBase with Store {
   ObservableList<Product> products = ObservableList<Product>();
 
   @observable
-  bool isLastPage = false;
-
-  @observable
   int page = 1;
 
   @observable
-  int productsPerPage = 10;
+  int productsPerPage = 20;
 
   @observable
   bool productsLoading = false;
 
   @action
   fetchProducts() async {
-    if (!isLastPage && !productsLoading) {
+    if (!productsLoading) {
       productsLoading = true;
       try {
         final searchResult = await ProductsService().search(
@@ -42,8 +39,6 @@ abstract class ProductsStoreBase with Store {
         if (searchResult.isNotEmpty) {
           products.addAll(searchResult);
           page++;
-        } else {
-          isLastPage = true;
         }
       } catch (e) {
         if (kDebugMode) {

@@ -35,10 +35,16 @@ class _HomePageState extends State<HomePage> {
     _scrollController.dispose();
   }
 
+  void _search() async {
+    _productsStore.page = 1;
+    _productsStore.products.clear();
+    _productsStore.fetchProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels >= (0.7 * _scrollController.position.maxScrollExtent) && _productsStore.isLastPage == false) {
+      if (_scrollController.position.pixels >= (0.8 * _scrollController.position.maxScrollExtent)) {
         _productsStore.fetchProducts();
       }
     });
@@ -54,7 +60,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: _productsStore.fetchProducts,
+          onPressed: _search,
           child: const Icon(Icons.search),
         ),
         body: Column(
@@ -71,14 +77,16 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  const FilterButton(),
+                  FilterButton(scrollController: _scrollController),
                 ],
               ),
             ),
             Expanded(
               child: ListView.builder(
                   controller: _scrollController,
-                  itemCount: _productsStore.products.length + 1,
+                  itemCount: _productsStore.products.length < _productsStore.productsPerPage
+                      ? _productsStore.products.length
+                      : _productsStore.products.length + 1,
                   itemBuilder: (BuildContext context, int index) {
                     if (index < _productsStore.products.length) {
                       final product = _productsStore.products[index];
