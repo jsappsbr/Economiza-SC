@@ -37,8 +37,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    _scrollController.addListener(
-        () => _scrollController.position.pixels >= (0.9 * _scrollController.position.maxScrollExtent) ? _productsStore.fetchProducts() : null);
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >= (0.7 * _scrollController.position.maxScrollExtent) && _productsStore.isLastPage == false) {
+        _productsStore.fetchProducts();
+      }
+    });
 
     return Observer(builder: (context) {
       return Scaffold(
@@ -82,28 +85,35 @@ class _HomePageState extends State<HomePage> {
                       final market = _marketsStore.markets.firstWhereOrNull((market) => market.id == product.marketId);
                       return Card(
                         child: Container(
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    child: Text(
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Image.network(product.picture, height: 120, width: 120),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
                                       product.name,
-                                      style: const TextStyle(fontSize: 18),
+                                      style: const TextStyle(fontSize: 20),
                                       overflow: TextOverflow.ellipsis,
                                     ),
-                                  ),
-                                  Text(
-                                    "R\$ ${product.price.toStringAsFixed(2)}",
-                                    style: const TextStyle(color: Colors.green, fontSize: 14),
-                                  ),
-                                ],
+                                    Text(
+                                      "R\$ ${product.price.toStringAsFixed(2)}",
+                                      style: const TextStyle(color: Colors.green, fontSize: 16),
+                                    ),
+                                    Text(market?.name ?? ''),
+                                  ],
+                                ),
                               ),
-                              Text(market?.name ?? ''),
-                              Image.network(product.picture),
                             ],
                           ),
                         ),
