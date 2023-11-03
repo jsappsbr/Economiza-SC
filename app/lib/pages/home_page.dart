@@ -3,6 +3,7 @@ import 'package:anotei/stores/markets_store.dart';
 import 'package:anotei/stores/products_store.dart';
 import 'package:anotei/widgets/filter_button.dart';
 import 'package:anotei/widgets/popup_menu_widget.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -27,7 +28,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _productsStore.scrollControler.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    _productsStore.scrollControler.addListener(() {
+      // If the user scrolls at least 80% of the screen, new products are loaded
+      if (_productsStore.scrollControler.position.pixels >= (0.8 * _productsStore.scrollControler.position.maxScrollExtent)) {
+        _productsStore.fetchProducts();
+      }
+    });
+
     return Observer(builder: (context) {
       return Scaffold(
         appBar: AppBar(
@@ -39,7 +53,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: _productsStore.fetchProducts,
+          onPressed: _productsStore.cleanProductSelection,
           child: const Icon(Icons.search),
         ),
         body: Column(
@@ -51,8 +65,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      decoration:
-                          const InputDecoration(hintText: 'Digite sua busca'),
+                      decoration: const InputDecoration(hintText: 'Digite o nome de um produto'),
                       onChanged: _filtersStore.updateSearch,
                     ),
                   ),
@@ -63,55 +76,63 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: _productsStore.products.length,
+                  controller: _productsStore.scrollControler,
+                  itemCount: _productsStore.products.length < _productsStore.productsPerPage
+                      ? _productsStore.products.length
+                      : _productsStore.products.length + 1,
                   itemBuilder: (BuildContext context, int index) {
-                    final product = _productsStore.products[index];
-                    final marketName = _getProductMarketName(product.marketId);
-
-                    return Card(
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    product.name,
-                                    style: const TextStyle(fontSize: 18),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                    if (index < _productsStore.products.length) {
+                      final product = _productsStore.products[index];
+                      final market = _marketsStore.markets.firstWhereOrNull((market) => market.id == product.marketId);
+                      return Card(
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Image.network(product.picture, height: 120, width: 120),
+                                  ],
                                 ),
-                                Text(
-                                  "R\$ ${product.price.toStringAsFixed(2)}",
-                                  style: const TextStyle(
-                                      color: Colors.green, fontSize: 14),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      product.name,
+                                      style: const TextStyle(fontSize: 20),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      "R\$ ${product.price.toStringAsFixed(2)}",
+                                      style: const TextStyle(color: Colors.green, fontSize: 16),
+                                    ),
+                                    Text(market?.name ?? ''),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            Text(marketName),
-                            Image.network(product.picture),
-                          ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    } else {
+                      return const Center(
+                        child: SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                      );
+                    }
                   }),
             )
           ],
         ),
       );
     });
-  }
-
-  String _getProductMarketName(int marketId) {
-    for (final market in _marketsStore.markets) {
-      if (market.id == marketId) {
-        return market.name;
-      }
-    }
-
-    return '';
   }
 }

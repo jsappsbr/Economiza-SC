@@ -17,14 +17,24 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
   final _marketsStore = Modular.get<MarketsStore>();
   final _productsStore = Modular.get<ProductsStore>();
 
+  void _scrollToTop() {
+    _productsStore.scrollControler.animateTo(
+      0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
+
   void _clearSelection() {
-    _filtersStore.selectedMarkets.clear();
+    _productsStore.cleanProductAndMarketSelection();
     _closeModal();
+    _scrollToTop();
   }
 
   void _submitSelection() async {
-    _productsStore.fetchProducts();
+    _productsStore.cleanProductSelection();
     _closeModal();
+    _scrollToTop();
   }
 
   void _closeModal() {
@@ -65,8 +75,7 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
         ),
         actions: <Widget>[
           ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.grey)),
+            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.grey)),
             onPressed: _clearSelection,
             child: const Text('Limpar Seleção'),
           ),

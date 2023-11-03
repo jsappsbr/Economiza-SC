@@ -12,13 +12,14 @@ class ProductController extends Controller
     {
         $search = $request->get('search');
         $storeIds = $request->get('store_ids', []);
+        $page = $request->get('page', 1);
+        $perPage = $request->get('per_page', 30);
 
         $products = Product::query()
             ->when($search, fn($query) => $query->where('name', 'like', "%{$search}%"))
             ->when($storeIds, fn($query) => $query->whereIn('store_id', $storeIds))
-            ->limit(200)
             ->orderBy('name')
-            ->get();
+            ->simplePaginate($perPage, page: $page);
 
         return response()->json($products);
     }

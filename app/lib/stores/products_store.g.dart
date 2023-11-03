@@ -25,6 +25,70 @@ mixin _$ProductsStore on ProductsStoreBase, Store {
     });
   }
 
+  late final _$pageAtom =
+      Atom(name: 'ProductsStoreBase.page', context: context);
+
+  @override
+  int get page {
+    _$pageAtom.reportRead();
+    return super.page;
+  }
+
+  @override
+  set page(int value) {
+    _$pageAtom.reportWrite(value, super.page, () {
+      super.page = value;
+    });
+  }
+
+  late final _$productsPerPageAtom =
+      Atom(name: 'ProductsStoreBase.productsPerPage', context: context);
+
+  @override
+  int get productsPerPage {
+    _$productsPerPageAtom.reportRead();
+    return super.productsPerPage;
+  }
+
+  @override
+  set productsPerPage(int value) {
+    _$productsPerPageAtom.reportWrite(value, super.productsPerPage, () {
+      super.productsPerPage = value;
+    });
+  }
+
+  late final _$productsLoadingAtom =
+      Atom(name: 'ProductsStoreBase.productsLoading', context: context);
+
+  @override
+  bool get productsLoading {
+    _$productsLoadingAtom.reportRead();
+    return super.productsLoading;
+  }
+
+  @override
+  set productsLoading(bool value) {
+    _$productsLoadingAtom.reportWrite(value, super.productsLoading, () {
+      super.productsLoading = value;
+    });
+  }
+
+  late final _$scrollControlerAtom =
+      Atom(name: 'ProductsStoreBase.scrollControler', context: context);
+
+  @override
+  ScrollController get scrollControler {
+    _$scrollControlerAtom.reportRead();
+    return super.scrollControler;
+  }
+
+  @override
+  set scrollControler(ScrollController value) {
+    _$scrollControlerAtom.reportWrite(value, super.scrollControler, () {
+      super.scrollControler = value;
+    });
+  }
+
   late final _$fetchProductsAsyncAction =
       AsyncAction('ProductsStoreBase.fetchProducts', context: context);
 
@@ -33,10 +97,33 @@ mixin _$ProductsStore on ProductsStoreBase, Store {
     return _$fetchProductsAsyncAction.run(() => super.fetchProducts());
   }
 
+  late final _$cleanProductSelectionAsyncAction =
+      AsyncAction('ProductsStoreBase.cleanProductSelection', context: context);
+
+  @override
+  Future cleanProductSelection() {
+    return _$cleanProductSelectionAsyncAction
+        .run(() => super.cleanProductSelection());
+  }
+
+  late final _$cleanProductAndMarketSelectionAsyncAction = AsyncAction(
+      'ProductsStoreBase.cleanProductAndMarketSelection',
+      context: context);
+
+  @override
+  Future cleanProductAndMarketSelection() {
+    return _$cleanProductAndMarketSelectionAsyncAction
+        .run(() => super.cleanProductAndMarketSelection());
+  }
+
   @override
   String toString() {
     return '''
-products: ${products}
+products: ${products},
+page: ${page},
+productsPerPage: ${productsPerPage},
+productsLoading: ${productsLoading},
+scrollControler: ${scrollControler}
     ''';
   }
 }
