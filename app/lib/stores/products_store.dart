@@ -26,7 +26,7 @@ abstract class ProductsStoreBase with Store {
   bool productsLoading = false;
 
   @observable
-  late ScrollController scrollControler;
+  ScrollController scrollControler = ScrollController();
 
   @action
   fetchProducts() async {

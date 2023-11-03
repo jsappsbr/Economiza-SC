@@ -25,7 +25,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _productsStore.fetchProducts();
     _marketsStore.fetchMarkets();
-    _productsStore.scrollControler = ScrollController();
   }
 
   @override
