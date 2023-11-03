@@ -19,32 +19,26 @@ class _HomePageState extends State<HomePage> {
   final _productsStore = Modular.get<ProductsStore>();
   final _filtersStore = Modular.get<FiltersStore>();
   final _marketsStore = Modular.get<MarketsStore>();
-  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _productsStore.fetchProducts();
     _marketsStore.fetchMarkets();
-    _scrollController = ScrollController();
+    _productsStore.scrollControler = ScrollController();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _scrollController.dispose();
-  }
-
-  void _search() async {
-    _productsStore.page = 1;
-    _productsStore.products.clear();
-    _productsStore.fetchProducts();
+    _productsStore.scrollControler.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels >= (0.8 * _scrollController.position.maxScrollExtent)) {
+    _productsStore.scrollControler.addListener(() {
+      // If the user scrolls at least 80% of the screen, new products are loaded
+      if (_productsStore.scrollControler.position.pixels >= (0.8 * _productsStore.scrollControler.position.maxScrollExtent)) {
         _productsStore.fetchProducts();
       }
     });
@@ -60,7 +54,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: _search,
+          onPressed: _productsStore.cleanProductSelection,
           child: const Icon(Icons.search),
         ),
         body: Column(
@@ -72,18 +66,18 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      decoration: const InputDecoration(hintText: 'Digite sua busca'),
+                      decoration: const InputDecoration(hintText: 'Digite o nome de um produto'),
                       onChanged: _filtersStore.updateSearch,
                     ),
                   ),
                   const SizedBox(width: 10),
-                  FilterButton(scrollController: _scrollController),
+                  const FilterButton(),
                 ],
               ),
             ),
             Expanded(
               child: ListView.builder(
-                  controller: _scrollController,
+                  controller: _productsStore.scrollControler,
                   itemCount: _productsStore.products.length < _productsStore.productsPerPage
                       ? _productsStore.products.length
                       : _productsStore.products.length + 1,

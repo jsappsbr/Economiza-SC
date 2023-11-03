@@ -6,9 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class FilterButton extends StatefulWidget {
-  const FilterButton({super.key, required this.scrollController});
-
-  final ScrollController scrollController;
+  const FilterButton({super.key});
 
   @override
   State<FilterButton> createState() => _FilterButtonState();
@@ -23,7 +21,7 @@ class _FilterButtonState extends State<FilterButton> {
       await showDialog<List<String>>(
         context: context,
         builder: (context) {
-          return  MultiSelectModal(scrollController: widget.scrollController);
+          return  const MultiSelectModal();
         },
       );
     } else {

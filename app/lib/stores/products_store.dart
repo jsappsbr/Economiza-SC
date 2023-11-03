@@ -2,6 +2,7 @@ import 'package:anotei/models/product.dart';
 import 'package:anotei/services/products_service.dart';
 import 'package:anotei/stores/filters_store.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -23,6 +24,9 @@ abstract class ProductsStoreBase with Store {
 
   @observable
   bool productsLoading = false;
+
+  @observable
+  late ScrollController scrollControler;
 
   @action
   fetchProducts() async {
@@ -48,5 +52,20 @@ abstract class ProductsStoreBase with Store {
         productsLoading = false;
       }
     }
+  }
+
+  @action
+  cleanProductSelection() async {
+    page = 1;
+    products.clear();
+    fetchProducts();
+  }
+
+  @action
+  cleanProductAndMarketSelection() async {
+    page = 1;
+    _filtersStore.selectedMarkets.clear();
+    products.clear();
+    fetchProducts();
   }
 }
