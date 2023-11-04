@@ -3,11 +3,12 @@
     "type": "module",
     "scripts": {
         "scraper": "node resources/js/scraper/index.js",
-        "scraper:supermercado-koch": "node resources/js/scraper/index.js supermercado-koch"
+        "scraper:supermercado-koch": "node resources/js/scraper/index.js supermercado-koch",
+        "scraper:fort-atacadista": "node resources/js/scraper/index.js fort-atacadista"
     },
     "dependencies": {
         "axios": "^1.5.1",
         "commander": "^11.1.0",
-        "puppeteer": "^21.3.8"
+        "puppeteer": "^21.5.0"
     }
 }
