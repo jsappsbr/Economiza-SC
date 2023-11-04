@@ -25,6 +25,6 @@ class Product extends Model
 
     public function store(): BelongsTo
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(Market::class);
     }
 }

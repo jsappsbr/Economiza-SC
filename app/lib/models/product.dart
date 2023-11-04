@@ -19,7 +19,7 @@ class Product {
 
   Product.fromMap(Map<String, dynamic> map) {
     id = map['id'];
-    marketId = map['store_id'];
+    marketId = map['market_id'];
     name = map['name'];
     price = map['price'].toDouble();
     picture = map['picture'];
