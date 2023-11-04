@@ -1,6 +1,7 @@
 import 'package:anotei/stores/filters_store.dart';
 import 'package:anotei/stores/markets_store.dart';
 import 'package:anotei/stores/products_store.dart';
+import 'package:anotei/widgets/expand_button.dart';
 import 'package:anotei/widgets/filter_button.dart';
 import 'package:anotei/widgets/popup_menu_widget.dart';
 import 'package:collection/collection.dart';
@@ -92,8 +93,10 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Expanded(
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Image.network(product.picture, height: 120, width: 120),
+                                    ExpandButton(url: product.picture, productName: product.name),
                                   ],
                                 ),
                               ),
