@@ -9,7 +9,7 @@ class ProductsService {
 
     final response = await api.post('/products/search', data: {
       'search': search,
-      'store_ids': marketIds,
+      'market_ids': marketIds,
       'page': page,
       'per_page': perPage,
     });
