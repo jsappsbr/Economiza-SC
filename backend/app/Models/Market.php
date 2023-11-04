@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Store extends Model
+class Market extends Model
 {
     use HasFactory;
 
@@ -15,14 +15,6 @@ class Store extends Model
         'code',
         'website',
     ];
-
-    static public function supermercadoKoch(): self
-    {
-        return self::firstOrCreate([
-            'name' => 'Supermercado Koch',
-            'website' => 'https://www.superkoch.com.br',
-        ]);
-    }
 
     public function products(): HasMany
     {
