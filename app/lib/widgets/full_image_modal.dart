@@ -1,21 +1,21 @@
+import 'package:anotei/models/product.dart';
 import 'package:flutter/material.dart';
 
 class FullImageModal extends StatelessWidget {
-  const FullImageModal({super.key, required this.url, required this.productName});
+  const FullImageModal({super.key, required this.product});
 
-  final String url;
-  final String productName;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(productName),
+      title: Text(product.name),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             constraints: const BoxConstraints(maxHeight: 427, maxWidth: 372),
-            child: Image.network(url),
+            child: Image.network(product.link),
           ),
         ],
       ),

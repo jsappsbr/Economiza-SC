@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Image.network(product.picture, height: 120, width: 120),
-                                    ExpandButton(url: product.picture, productName: product.name),
+                                    ExpandButton(product: product),
                                   ],
                                 ),
                               ),
