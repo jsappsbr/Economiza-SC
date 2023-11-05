@@ -44,6 +44,8 @@ dependencies:
   collection: ^1.17.2
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
 
