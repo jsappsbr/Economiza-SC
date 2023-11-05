@@ -9,11 +9,12 @@ class ExpandButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return IconButton(
+      splashRadius: 20,
       onPressed: () async {
         await showDialog(context: context, builder: (context) => FullImageModal(url: url, productName: productName));
       },
-      child: const Text('Expandir'),
+      icon: const Icon(Icons.zoom_in),
     );
   }
 }
