@@ -15,7 +15,7 @@ class FullImageModal extends StatelessWidget {
         children: [
           Container(
             constraints: const BoxConstraints(maxHeight: 427, maxWidth: 372),
-            child: Image.network(product.link),
+            child: Image.network(product.picture),
           ),
         ],
       ),
