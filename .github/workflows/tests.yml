@@ -1,0 +1,49 @@
+name: Tests
+
+on: [ push ]
+
+jobs:
+  test-backend:
+    name: Test Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+
+      - name: Prepare Laravel Application
+        working-directory: ./backend
+        run: |
+          cp .env.example .env
+          composer install --no-scripts
+          php artisan key:generate
+
+      - name: Run tests
+        working-directory: ./backend
+        run: php artisan test
+
+  test-app:
+    name: Test App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        working-directory: ./app
+        run: flutter pub get
+
+      - name: Run tests
+        working-directory: ./app
+        run: flutter test
