@@ -73,22 +73,6 @@ mixin _$ProductsStore on ProductsStoreBase, Store {
     });
   }
 
-  late final _$scrollControlerAtom =
-      Atom(name: 'ProductsStoreBase.scrollControler', context: context);
-
-  @override
-  ScrollController get scrollControler {
-    _$scrollControlerAtom.reportRead();
-    return super.scrollControler;
-  }
-
-  @override
-  set scrollControler(ScrollController value) {
-    _$scrollControlerAtom.reportWrite(value, super.scrollControler, () {
-      super.scrollControler = value;
-    });
-  }
-
   late final _$fetchProductsAsyncAction =
       AsyncAction('ProductsStoreBase.fetchProducts', context: context);
 
@@ -116,14 +100,27 @@ mixin _$ProductsStore on ProductsStoreBase, Store {
         .run(() => super.cleanProductAndMarketSelection());
   }
 
+  late final _$ProductsStoreBaseActionController =
+      ActionController(name: 'ProductsStoreBase', context: context);
+
+  @override
+  dynamic initScrollController() {
+    final _$actionInfo = _$ProductsStoreBaseActionController.startAction(
+        name: 'ProductsStoreBase.initScrollController');
+    try {
+      return super.initScrollController();
+    } finally {
+      _$ProductsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 products: ${products},
 page: ${page},
 productsPerPage: ${productsPerPage},
-productsLoading: ${productsLoading},
-scrollControler: ${scrollControler}
+productsLoading: ${productsLoading}
     ''';
   }
 }

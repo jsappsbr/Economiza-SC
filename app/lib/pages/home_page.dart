@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _productsStore.initScrollController();
     _productsStore.fetchProducts();
     _marketsStore.fetchMarkets();
   }
@@ -31,18 +32,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     super.dispose();
-    _productsStore.scrollControler.dispose();
+    _productsStore.scrollController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    _productsStore.scrollControler.addListener(() {
-      // If the user scrolls at least 80% of the screen, new products are loaded
-      if (_productsStore.scrollControler.position.pixels >= (0.8 * _productsStore.scrollControler.position.maxScrollExtent)) {
-        _productsStore.fetchProducts();
-      }
-    });
-
     return Observer(builder: (context) {
       return Scaffold(
         appBar: AppBar(
@@ -66,7 +60,8 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      decoration: const InputDecoration(hintText: 'Digite o nome de um produto'),
+                      decoration: const InputDecoration(
+                          hintText: 'Digite o nome de um produto'),
                       onChanged: _filtersStore.updateSearch,
                     ),
                   ),
@@ -77,14 +72,16 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: ListView.builder(
-                  controller: _productsStore.scrollControler,
-                  itemCount: _productsStore.products.length < _productsStore.productsPerPage
+                  controller: _productsStore.scrollController,
+                  itemCount: _productsStore.products.length <
+                          _productsStore.productsPerPage
                       ? _productsStore.products.length
                       : _productsStore.products.length + 1,
                   itemBuilder: (BuildContext context, int index) {
                     if (index < _productsStore.products.length) {
                       final product = _productsStore.products[index];
-                      final market = _marketsStore.markets.firstWhereOrNull((market) => market.id == product.marketId);
+                      final market = _marketsStore.markets.firstWhereOrNull(
+                          (market) => market.id == product.marketId);
                       return Card(
                         child: Container(
                           padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
@@ -95,15 +92,18 @@ class _HomePageState extends State<HomePage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Image.network(product.picture, height: 120, width: 120),
+                                    Image.network(product.picture,
+                                        height: 120, width: 120),
                                     ExpandButton(product: product),
                                   ],
                                 ),
                               ),
                               Expanded(
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       product.name,
@@ -112,7 +112,8 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Text(
                                       "R\$ ${product.price.toStringAsFixed(2)}",
-                                      style: const TextStyle(color: Colors.green, fontSize: 16),
+                                      style: const TextStyle(
+                                          color: Colors.green, fontSize: 16),
                                     ),
                                     Text(market?.name ?? ''),
                                   ],

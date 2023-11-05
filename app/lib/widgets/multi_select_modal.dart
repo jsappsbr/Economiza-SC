@@ -18,7 +18,7 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
   final _productsStore = Modular.get<ProductsStore>();
 
   void _scrollToTop() {
-    _productsStore.scrollControler.animateTo(
+    _productsStore.scrollController.animateTo(
       0,
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,

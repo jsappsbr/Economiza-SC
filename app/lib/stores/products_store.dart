@@ -25,32 +25,45 @@ abstract class ProductsStoreBase with Store {
   @observable
   bool productsLoading = false;
 
-  @observable
-  ScrollController scrollControler = ScrollController();
+  late ScrollController scrollController;
+
+  @action
+  initScrollController() {
+    scrollController = ScrollController();
+    scrollController.addListener(() {
+      // If the user scrolls at least 80% of the screen, new products are loaded
+      if (scrollController.position.pixels >=
+          (0.8 * scrollController.position.maxScrollExtent)) {
+        fetchProducts();
+      }
+    });
+  }
 
   @action
   fetchProducts() async {
-    if (!productsLoading) {
-      productsLoading = true;
-      try {
-        final searchResult = await ProductsService().search(
-          _filtersStore.search.value,
-          page,
-          productsPerPage,
-          marketIds: _filtersStore.selectedMarkets.map((e) => e.id).toList(),
-        );
+    if (productsLoading) {
+      return;
+    }
 
-        if (searchResult.isNotEmpty) {
-          products.addAll(searchResult);
-          page++;
-        }
-      } catch (e) {
-        if (kDebugMode) {
-          print(e);
-        }
-      } finally {
-        productsLoading = false;
+    try {
+      productsLoading = true;
+      final searchResult = await ProductsService().search(
+        _filtersStore.search.value,
+        page,
+        productsPerPage,
+        marketIds: _filtersStore.selectedMarkets.map((e) => e.id).toList(),
+      );
+
+      if (searchResult.isNotEmpty) {
+        products.addAll(searchResult);
+        page++;
       }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    } finally {
+      productsLoading = false;
     }
   }
 
