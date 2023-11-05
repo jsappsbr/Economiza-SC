@@ -8,7 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
@@ -22,7 +23,7 @@ jobs:
           composer install --no-scripts
           php artisan key:generate
 
-      - name: Run Test suite
+      - name: Run tests
         working-directory: ./backend
         run: php artisan test
 
@@ -30,19 +31,19 @@ jobs:
     name: Test App
     runs-on: ubuntu-latest
     steps:
-      - name: ⬇️ Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: ⚙️ Setup Flutter
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           cache: true
 
-      - name: ⚙️ Install dependencies for all packages
+      - name: Install dependencies
         working-directory: ./app
         run: flutter pub get
 
-      - name: 🧪 Run tests
+      - name: Run tests
         working-directory: ./app
         run: flutter test
