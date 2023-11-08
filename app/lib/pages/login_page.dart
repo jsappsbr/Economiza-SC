@@ -72,8 +72,8 @@ class _LoginFormState extends State<LoginForm> {
                     onPressed: () => _authStore.isAuthenticating ? null : _handleSubmit(context),
                     child: _authStore.isAuthenticating
                         ? const SizedBox(
-                            width: 24,
-                            height: 24,
+                            width: 20,
+                            height: 20,
                             child: CircularProgressIndicator(
                               color: Colors.white,
                             ),
