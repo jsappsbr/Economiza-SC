@@ -49,6 +49,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: const Color(0xffff3131),
           onPressed: _productsStore.cleanProductSelection,
           child: const Icon(Icons.search),
         ),

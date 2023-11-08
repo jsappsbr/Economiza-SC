@@ -15,3 +15,9 @@ dart run build_runner watch --delete-conflicting-outputs
 ```bash
 flutter run -d chrome --web-renderer html
 ```
+
+- Apply changes to icon/logo to any platform
+
+```bash
+dart run flutter_launcher_icons
+```
