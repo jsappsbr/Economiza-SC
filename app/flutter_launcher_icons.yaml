@@ -1,9 +1,9 @@
 flutter_launcher_icons:
-  image_path: "assets/images/logo_simple_white_economiza.png"
+  image_path: "assets/images/logo_full_economiza.png"
   android: true
+  min_sdk_android: 21 
   ios: true
   remove_alpha_ios: true
-  min_sdk_android: 21 
   web:
     generate: true
     image_path: "assets/images/logo_simple_economiza.png"
