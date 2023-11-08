@@ -39,7 +39,8 @@ class _LoginFormState extends State<LoginForm> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const LogoWidget(assetPath: 'assets/images/logo_economiza_sc_round.png'),
+              const LogoWidget(assetPath: 'assets/images/logo_full_economiza.png'),
+              const SizedBox(height: 30),
               TextFormField(
                 key: const Key('emailField'),
                 controller: _emailController,
@@ -68,6 +69,7 @@ class _LoginFormState extends State<LoginForm> {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Observer(builder: (_) {
                   return ElevatedButton(
+                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffff3131))),
                     key: const Key('loginButton'),
                     onPressed: () => _authStore.isAuthenticating ? null : _handleSubmit(context),
                     child: _authStore.isAuthenticating

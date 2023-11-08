@@ -7,12 +7,13 @@ class LogoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-      backgroundColor: Colors.white,
-      radius: 120,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10), 
       child: Image.asset(
         assetPath,
         fit: BoxFit.cover,
+        width: 200, 
+        height: 200, 
       ),
     );
   }

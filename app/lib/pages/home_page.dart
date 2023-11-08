@@ -40,9 +40,10 @@ class _HomePageState extends State<HomePage> {
     return Observer(builder: (context) {
       return Scaffold(
         appBar: AppBar(
-          title: const Center(
-            child: Text('Economiza SC'),
-          ),
+          backgroundColor: const Color(0xffff3131),
+          leading: Image.asset('assets/images/logo_simple_economiza.png'),
+          leadingWidth: 50,
+          title: const Text('Economiza SC'),
           actions: const [
             CustomPopUpMenu(),
           ],
