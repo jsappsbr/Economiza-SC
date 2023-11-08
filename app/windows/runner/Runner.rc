@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "br.com.jsapps.anotei" "\0"
-            VALUE "FileDescription", "anotei" "\0"
+            VALUE "CompanyName", "br.com.jsapps.economiza_sc" "\0"
+            VALUE "FileDescription", "economiza_sc" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "anotei" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 br.com.jsapps.anotei. All rights reserved." "\0"
-            VALUE "OriginalFilename", "anotei.exe" "\0"
-            VALUE "ProductName", "anotei" "\0"
+            VALUE "InternalName", "economiza_sc" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 br.com.jsapps.economiza_sc. All rights reserved." "\0"
+            VALUE "OriginalFilename", "economiza_sc.exe" "\0"
+            VALUE "ProductName", "economiza_sc" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

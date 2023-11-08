@@ -1,11 +1,11 @@
 {
-    "name": "anotei",
-    "short_name": "anotei",
+    "name": "economiza_sc",
+    "short_name": "economiza_sc",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Anotei",
+    "description": "Economiza SC",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

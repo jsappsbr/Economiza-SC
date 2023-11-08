@@ -1,5 +1,5 @@
-import 'package:anotei/stores/auth_store.dart';
-import 'package:anotei/widgets/logo_widget.dart';
+import 'package:economiza_sc/stores/auth_store.dart';
+import 'package:economiza_sc/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -39,8 +39,7 @@ class _LoginFormState extends State<LoginForm> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const LogoWidget(
-                  assetPath: 'assets/images/logo_anotei_round.png'),
+              const LogoWidget(assetPath: 'assets/images/logo_economiza_sc_round.png'),
               TextFormField(
                 key: const Key('emailField'),
                 controller: _emailController,
@@ -70,9 +69,7 @@ class _LoginFormState extends State<LoginForm> {
                 child: Observer(builder: (_) {
                   return ElevatedButton(
                     key: const Key('loginButton'),
-                    onPressed: () => _authStore.isAuthenticating
-                        ? null
-                        : _handleSubmit(context),
+                    onPressed: () => _authStore.isAuthenticating ? null : _handleSubmit(context),
                     child: _authStore.isAuthenticating
                         ? const SizedBox(
                             width: 24,

@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:anotei/models/user.dart';
+import 'package:economiza_sc/models/user.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:device_info_plus/device_info_plus.dart';

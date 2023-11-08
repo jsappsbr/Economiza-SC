@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = anotei
+PRODUCT_NAME = economiza_sc
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = br.com.jsapps.anotei.anotei
+PRODUCT_BUNDLE_IDENTIFIER = br.com.jsapps.economiza_sc.economiza_sc
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 br.com.jsapps.anotei. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 br.com.jsapps.economiza_sc. All rights reserved.

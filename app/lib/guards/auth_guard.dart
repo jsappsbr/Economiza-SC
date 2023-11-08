@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'package:anotei/stores/auth_store.dart';
+import 'package:economiza_sc/stores/auth_store.dart';
 
 class AuthGuard extends RouteGuard {
   AuthGuard() : super(redirectTo: '/login');

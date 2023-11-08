@@ -1,6 +1,6 @@
-import 'package:anotei/stores/filters_store.dart';
-import 'package:anotei/stores/markets_store.dart';
-import 'package:anotei/widgets/multi_select_modal.dart';
+import 'package:economiza_sc/stores/filters_store.dart';
+import 'package:economiza_sc/stores/markets_store.dart';
+import 'package:economiza_sc/widgets/multi_select_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -21,7 +21,7 @@ class _FilterButtonState extends State<FilterButton> {
       await showDialog<List<String>>(
         context: context,
         builder: (context) {
-          return  const MultiSelectModal();
+          return const MultiSelectModal();
         },
       );
     } else {

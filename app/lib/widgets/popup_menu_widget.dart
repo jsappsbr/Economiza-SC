@@ -1,4 +1,4 @@
-import 'package:anotei/stores/auth_store.dart';
+import 'package:economiza_sc/stores/auth_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -10,7 +10,6 @@ class CustomPopUpMenu extends StatefulWidget {
 }
 
 class _CustomPopUpMenuState extends State<CustomPopUpMenu> {
-  
   final _authStore = Modular.get<AuthStore>();
 
   @override
