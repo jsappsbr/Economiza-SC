@@ -8,7 +8,7 @@
 PRODUCT_NAME = economiza_sc
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = br.com.jsapps.economiza_sc.economiza_sc
+PRODUCT_BUNDLE_IDENTIFIER = br.com.jsapps.economiza_sc
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 br.com.jsapps.economiza_sc. All rights reserved.
