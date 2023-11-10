@@ -1,6 +1,6 @@
-import 'package:anotei/stores/filters_store.dart';
-import 'package:anotei/stores/markets_store.dart';
-import 'package:anotei/stores/products_store.dart';
+import 'package:economiza_sc/stores/filters_store.dart';
+import 'package:economiza_sc/stores/markets_store.dart';
+import 'package:economiza_sc/stores/products_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -80,6 +80,7 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
             child: const Text('Limpar Seleção'),
           ),
           ElevatedButton(
+            style: ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(const Color(0xffff3131))),
             onPressed: _submitSelection,
             child: const Text('Confirmar'),
           ),

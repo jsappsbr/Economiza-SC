@@ -1,4 +1,4 @@
-import 'package:anotei/services/auth_service.dart';
+import 'package:economiza_sc/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';

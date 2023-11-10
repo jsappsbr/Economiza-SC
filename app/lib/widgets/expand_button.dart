@@ -1,5 +1,5 @@
-import 'package:anotei/models/product.dart';
-import 'package:anotei/widgets/full_image_modal.dart';
+import 'package:economiza_sc/models/product.dart';
+import 'package:economiza_sc/widgets/full_image_modal.dart';
 import 'package:flutter/material.dart';
 
 class ExpandButton extends StatelessWidget {

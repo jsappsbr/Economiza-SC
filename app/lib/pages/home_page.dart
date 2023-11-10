@@ -1,9 +1,9 @@
-import 'package:anotei/stores/filters_store.dart';
-import 'package:anotei/stores/markets_store.dart';
-import 'package:anotei/stores/products_store.dart';
-import 'package:anotei/widgets/expand_button.dart';
-import 'package:anotei/widgets/filter_button.dart';
-import 'package:anotei/widgets/popup_menu_widget.dart';
+import 'package:economiza_sc/stores/filters_store.dart';
+import 'package:economiza_sc/stores/markets_store.dart';
+import 'package:economiza_sc/stores/products_store.dart';
+import 'package:economiza_sc/widgets/expand_button.dart';
+import 'package:economiza_sc/widgets/filter_button.dart';
+import 'package:economiza_sc/widgets/popup_menu_widget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -40,14 +40,16 @@ class _HomePageState extends State<HomePage> {
     return Observer(builder: (context) {
       return Scaffold(
         appBar: AppBar(
-          title: const Center(
-            child: Text('Anotei'),
-          ),
+          backgroundColor: const Color(0xffff3131),
+          leading: Image.asset('assets/images/logo_simple_economiza.png'),
+          leadingWidth: 50,
+          title: const Text('Economiza SC'),
           actions: const [
             CustomPopUpMenu(),
           ],
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: const Color(0xffff3131),
           onPressed: _productsStore.cleanProductSelection,
           child: const Icon(Icons.search),
         ),
@@ -60,7 +62,8 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      decoration: const InputDecoration(hintText: 'Digite o nome de um produto'),
+                      decoration: const InputDecoration(
+                          hintText: 'Digite o nome de um produto'),
                       onChanged: _filtersStore.updateSearch,
                     ),
                   ),
@@ -70,67 +73,67 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Expanded(
-              child: _productsStore.productsLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : ListView.builder(
-                      controller: _productsStore.scrollController,
-                      itemCount: _productsStore.products.length < _productsStore.productsPerPage
-                          ? _productsStore.products.length
-                          : _productsStore.products.length + 1,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (index < _productsStore.products.length) {
-                          final product = _productsStore.products[index];
-                          final market = _marketsStore.markets.firstWhereOrNull((market) => market.id == product.marketId);
-                          return Card(
-                            child: Container(
-                              padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Image.network(product.picture, height: 120, width: 120),
-                                        ExpandButton(product: product),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          product.name,
-                                          style: const TextStyle(fontSize: 20),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Text(
-                                          "R\$ ${product.price.toStringAsFixed(2)}",
-                                          style: const TextStyle(color: Colors.green, fontSize: 16),
-                                        ),
-                                        Text(market?.name ?? ''),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+              child: ListView.builder(
+                  controller: _productsStore.scrollController,
+                  itemCount: _productsStore.products.length <
+                          _productsStore.productsPerPage
+                      ? _productsStore.products.length
+                      : _productsStore.products.length + 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index < _productsStore.products.length) {
+                      final product = _productsStore.products[index];
+                      final market = _marketsStore.markets.firstWhereOrNull(
+                          (market) => market.id == product.marketId);
+                      return Card(
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.network(product.picture,
+                                        height: 120, width: 120),
+                                    ExpandButton(product: product),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        } else {
-                          return const Center(
-                            child: SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            ),
-                          );
-                        }
-                      }),
-            )
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      product.name,
+                                      style: const TextStyle(fontSize: 20),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      "R\$ ${product.price.toStringAsFixed(2)}",
+                                      style: const TextStyle(
+                                          color: Colors.green, fontSize: 16),
+                                    ),
+                                    Text(market?.name ?? ''),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    } else {
+                      return null;
+                    }
+                  }),
+            ),
+            _productsStore.productsLoading
+                ? const LinearProgressIndicator(
+                    color: Colors.grey, backgroundColor: Colors.white60)
+                : Container(),
           ],
         ),
       );

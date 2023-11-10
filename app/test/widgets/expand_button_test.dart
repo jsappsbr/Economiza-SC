@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:anotei/models/product.dart';
-import 'package:anotei/widgets/expand_button.dart';
+import 'package:economiza_sc/models/product.dart';
+import 'package:economiza_sc/widgets/expand_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

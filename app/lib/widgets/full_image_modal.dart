@@ -1,4 +1,4 @@
-import 'package:anotei/models/product.dart';
+import 'package:economiza_sc/models/product.dart';
 import 'package:flutter/material.dart';
 
 class FullImageModal extends StatelessWidget {

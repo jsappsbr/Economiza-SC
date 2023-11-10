@@ -1,5 +1,5 @@
-import 'package:anotei/models/market.dart';
-import 'package:anotei/services/markets_service.dart';
+import 'package:economiza_sc/models/market.dart';
+import 'package:economiza_sc/services/markets_service.dart';
 import 'package:mobx/mobx.dart';
 
 part 'markets_store.g.dart';
@@ -7,7 +7,6 @@ part 'markets_store.g.dart';
 class MarketsStore = MarketsStoreBase with _$MarketsStore;
 
 abstract class MarketsStoreBase with Store {
-  
   @observable
   ObservableList<Market> markets = ObservableList<Market>();
 

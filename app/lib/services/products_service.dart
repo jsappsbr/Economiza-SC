@@ -1,9 +1,8 @@
-import 'package:anotei/models/product.dart';
+import 'package:economiza_sc/models/product.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class ProductsService {
-  
   Future<List<Product>> search(String search, int page, int perPage, {List<int>? marketIds}) async {
     final api = Modular.get<Dio>();
 

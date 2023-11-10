@@ -1,6 +1,6 @@
-import 'package:anotei/models/product.dart';
-import 'package:anotei/services/products_service.dart';
-import 'package:anotei/stores/filters_store.dart';
+import 'package:economiza_sc/models/product.dart';
+import 'package:economiza_sc/services/products_service.dart';
+import 'package:economiza_sc/stores/filters_store.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -32,8 +32,7 @@ abstract class ProductsStoreBase with Store {
     scrollController = ScrollController();
     scrollController.addListener(() {
       // If the user scrolls at least 80% of the screen, new products are loaded
-      if (scrollController.position.pixels >=
-          (0.8 * scrollController.position.maxScrollExtent)) {
+      if (scrollController.position.pixels >= (0.8 * scrollController.position.maxScrollExtent)) {
         fetchProducts();
       }
     });

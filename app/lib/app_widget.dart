@@ -1,4 +1,4 @@
-import 'package:anotei/stores/auth_store.dart';
+import 'package:economiza_sc/stores/auth_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -35,7 +35,7 @@ class _AppWidgetState extends State<AppWidget> {
 
       return MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        title: 'Anotei',
+        title: 'Economiza SC',
         routerConfig: Modular.routerConfig,
       );
     });

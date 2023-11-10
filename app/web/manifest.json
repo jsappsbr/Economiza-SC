@@ -1,11 +1,11 @@
 {
-    "name": "anotei",
-    "short_name": "anotei",
+    "name": "Economiza SC",
+    "short_name": "EcSC",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "Anotei",
+    "background_color": "#hexcode",
+    "theme_color": "#hexcode",
+    "description": "Economiza SC",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

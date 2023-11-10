@@ -1,9 +1,8 @@
-import 'package:anotei/models/market.dart';
+import 'package:economiza_sc/models/market.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class MarketsService {
-
   Future<List<Market>> search() async {
     final api = Modular.get<Dio>();
 
@@ -13,5 +12,4 @@ class MarketsService {
 
     return data.map((e) => Market.fromMap(e)).toList();
   }
-
 }
