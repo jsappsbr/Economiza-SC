@@ -1,11 +1,11 @@
 {
-    "name": "Economiza SC",
-    "short_name": "EcSC",
+    "name": "economiza_sc",
+    "short_name": "economiza_sc",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#hexcode",
     "theme_color": "#hexcode",
-    "description": "Economiza SC",
+    "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
