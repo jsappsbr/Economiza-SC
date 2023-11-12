@@ -1,5 +1,6 @@
 import 'package:economiza_sc/stores/filters_store.dart';
 import 'package:economiza_sc/stores/markets_store.dart';
+import 'package:economiza_sc/stores/products_store.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class TestModule extends Module {
@@ -7,6 +8,7 @@ class TestModule extends Module {
   void binds(Injector i) {
     i.addSingleton<FiltersStore>(() => FiltersStore());
     i.addSingleton<MarketsStore>(() => MarketsStore());
+    i.addSingleton<ProductsStore>(() => ProductsStore());
     super.binds(i);
   }
 }
