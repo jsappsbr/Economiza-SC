@@ -80,7 +80,7 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
             child: const Text('Limpar Seleção'),
           ),
           ElevatedButton(
-            style: ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(const Color(0xffff3131))),
+            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffff3131))),
             onPressed: _submitSelection,
             child: const Text('Confirmar'),
           ),
