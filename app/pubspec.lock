@@ -455,6 +455,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.0"
+  mockito:
+    dependency: "direct dev"
+    description:
+      name: mockito
+      sha256: "4b693867cee1853c9d1d7ecc1871f27f39b2ef2c13c0d8d8507dfe5bebd8aaf1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.4.3"
   modular_core:
     dependency: transitive
     description:
