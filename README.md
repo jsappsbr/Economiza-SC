@@ -1,2 +1,23 @@
-# Economiza-SC
-[![Tests](https://github.com/jsappsbr/Economiza-SC/actions/workflows/tests.yml/badge.svg)](https://github.com/jsappsbr/anotei/actions/workflows/tests.yml)
+# economiza sc
+
+Economiza SC
+
+### Commands
+
+- Build runner
+
+```bash
+dart run build_runner watch --delete-conflicting-outputs
+```
+
+- Run Flutter web with html renderer (fix cors)
+
+```bash
+flutter run -d chrome --web-renderer html
+```
+
+- Apply changes to icon/logo for any platform
+
+```bash
+dart run flutter_launcher_icons
+```
