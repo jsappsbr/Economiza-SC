@@ -45,7 +45,7 @@ void main() {
     });
   });
 
-  group('when then authentication fails', () {
+  group('when the authentication fails', () {
     test('it sets the user as not authenticated', () async {
       when(mockAuthService.login(any, any)).thenThrow(Exception());
 
@@ -57,6 +57,32 @@ void main() {
       expect(authStore.isAuthenticating, false);
       expect(authStore.user, null);
       verify(mockAuthService.login(email, password)).called(1);
+    });
+  });
+
+    group('Logout method', () {
+    test('User is logged out successfully', () async {
+      final authStore = AuthStore();
+
+      when(mockAuthService.logout()).thenAnswer((_) async {});
+
+      await authStore.logout();
+
+      expect(authStore.isLogged, false);
+      expect(authStore.user, null);
+      verify(mockAuthService.logout()).called(1);
+    });
+
+    test('User is not logged out', () async {
+      final authStore = AuthStore();
+      authStore.isLogged = true;
+      authStore.user = User(id: 1, name: 'Test User', email: email);
+      when(mockAuthService.logout()).thenThrow(Exception());
+      await authStore.logout();
+
+      expect(authStore.isLogged, true);
+      expect(authStore.user, isNotNull);
+      verify(mockAuthService.logout()).called(1);
     });
   });
 }
