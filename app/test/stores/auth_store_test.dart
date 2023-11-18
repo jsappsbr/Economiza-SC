@@ -13,14 +13,16 @@ import 'auth_store_test.mocks.dart';
 void main() {
   const email = 'test@test.com';
   const password = 'password';
-
   final mockAuthService = MockAuthService();
-
-  Modular.bindModule(AppModule());
-  Modular.replaceInstance<AuthService>(mockAuthService);
 
   setUp(() {
     reset(mockAuthService);
+    Modular.init(AppModule());
+    Modular.replaceInstance<AuthService>(mockAuthService);
+  });
+
+  tearDown(() {
+    Modular.destroy();
   });
 
   group('when the authentication succeeds', () {
@@ -31,8 +33,7 @@ void main() {
         email: email,
       );
 
-      when(mockAuthService.login(email, password))
-          .thenAnswer((_) async => user);
+      when(mockAuthService.login(email, password)).thenAnswer((_) async => user);
 
       final authStore = AuthStore();
 
@@ -59,11 +60,10 @@ void main() {
       verify(mockAuthService.login(email, password)).called(1);
     });
   });
-
-    group('Logout method', () {
+  group('Logout method', () {
     test('User is logged out successfully', () async {
       final authStore = AuthStore();
-
+      authStore.user = User(id: 1, name: 'Test User', email: email);
       when(mockAuthService.logout()).thenAnswer((_) async {});
 
       await authStore.logout();
