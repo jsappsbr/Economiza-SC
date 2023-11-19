@@ -1,6 +1,4 @@
-# economiza sc
-
-Economiza SC
+# Economiza SC
 
 ### Commands
 
