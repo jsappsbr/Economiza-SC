@@ -1,5 +1,6 @@
 import 'package:economiza_sc/guards/auth_guard.dart';
 import 'package:economiza_sc/services/auth_service.dart';
+import 'package:economiza_sc/services/products_service.dart';
 import 'package:economiza_sc/stores/auth_store.dart';
 import 'package:economiza_sc/stores/filters_store.dart';
 import 'package:economiza_sc/stores/products_store.dart';
@@ -15,6 +16,7 @@ class AppModule extends Module {
   @override
   void binds(i) {
     i.addSingleton<AuthService>(() => AuthService());
+    i.addSingleton<ProductsService>(() => ProductsService());
     i.addSingleton<AuthStore>(() => AuthStore());
     i.addSingleton<ProductsStore>(() => ProductsStore());
     i.addSingleton<MarketsStore>(() => MarketsStore());
