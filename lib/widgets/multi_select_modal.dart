@@ -6,7 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class MultiSelectModal extends StatefulWidget {
-  const MultiSelectModal({Key? key}) : super(key: key);
+  const MultiSelectModal({super.key});
 
   @override
   State<MultiSelectModal> createState() => _MultiSelectModalState();
