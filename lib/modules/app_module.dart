@@ -7,9 +7,8 @@ import 'package:economiza_sc/stores/markets_store.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:economiza_sc/pages/home_page.dart';
 import 'package:economiza_sc/pages/login_page.dart';
+import 'package:economiza_sc/config/environment_variables.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'dart:io';
 
 class AppModule extends Module {
   @override
@@ -20,17 +19,7 @@ class AppModule extends Module {
     i.addSingleton<MarketsStore>(() => MarketsStore());
     i.addSingleton<FiltersStore>(() => FiltersStore());
     i.addSingleton<Dio>(() {
-      String baseUrl = '';
-
-      if (kIsWeb) {
-        baseUrl = 'http://localhost:8000/api';
-      } else if (Platform.isIOS || Platform.isAndroid) {
-        baseUrl = 'http://10.0.2.2:8000/api';
-      } else {
-        baseUrl = 'http://localhost:8000/api';
-      }
-
-      final options = BaseOptions(baseUrl: baseUrl);
+      final options = BaseOptions(baseUrl: EnvironmentVariable.apiBaseUrl);
       final dio = Dio(options);
 
       dio.interceptors.add(InterceptorsWrapper(
