@@ -25,14 +25,19 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
     );
   }
 
-  void _clearSelection() {
-    _productsStore.cleanProductAndMarketSelection();
+  void _clearSelection() async {
+    _productsStore.goToFirstPage();
+    await _filtersStore.cleanSelectedMarkets();
+    await _productsStore.cleanSelectedProducts();
+    await _productsStore.fetchProducts();
     _closeModal();
     _scrollToTop();
   }
 
   void _submitSelection() async {
-    _productsStore.cleanProductSelection();
+    _productsStore.goToFirstPage();
+    await _productsStore.cleanSelectedProducts();
+    await _productsStore.fetchProducts();
     _closeModal();
     _scrollToTop();
   }

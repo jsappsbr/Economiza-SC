@@ -68,17 +68,12 @@ abstract class ProductsStoreBase with Store {
   }
 
   @action
-  cleanProductSelection() async {
-    page = 1;
+  cleanSelectedProducts() async {
     products.clear();
-    fetchProducts();
   }
 
   @action
-  cleanProductAndMarketSelection() async {
+  goToFirstPage() {
     page = 1;
-    _filtersStore.selectedMarkets.clear();
-    products.clear();
-    fetchProducts();
   }
 }

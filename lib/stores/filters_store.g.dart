@@ -41,6 +41,15 @@ mixin _$FiltersStore on FiltersStoreBase, Store {
     });
   }
 
+  late final _$cleanSelectedMarketsAsyncAction =
+      AsyncAction('FiltersStoreBase.cleanSelectedMarkets', context: context);
+
+  @override
+  Future cleanSelectedMarkets() {
+    return _$cleanSelectedMarketsAsyncAction
+        .run(() => super.cleanSelectedMarkets());
+  }
+
   late final _$FiltersStoreBaseActionController =
       ActionController(name: 'FiltersStoreBase', context: context);
 

@@ -23,7 +23,7 @@ void main() {
     Modular.destroy();
   });
 
-  group('Products Store', () {
+  group('ProductsStore class', () {
     group('fetchProducts method', () {
       test('products are properly fetched', () async {
         final List<Product> mockedProducts = [
@@ -48,7 +48,7 @@ void main() {
         expect(productsStore.productsLoading, false);
         verify(mockProductsService.search('', 1, 20, marketIds: [])).called(1);
       });
-      test('products are not fetched successfully', () async {
+      test('ProductsService\'s search method returns an error', () async {
         when(mockProductsService.search('', 1, 20, marketIds: [])).thenThrow(Exception());
 
         final productsStore = ProductsStore();
@@ -59,6 +59,22 @@ void main() {
         expect(productsStore.productsLoading, false);
         verify(mockProductsService.search('', 1, 20, marketIds: [])).called(1);
       });
+    });
+    group('cleanProductSelection method', () {
+      test('products are cleaned succesfully', () {
+        final productsStore = ProductsStore();
+        productsStore.products.add(Product(id: 1, marketId: 1, name: '', price: 1, picture: '', link: '', sku: ''));
+        when(productsStore.cleanSelectedProducts());
+
+        expect(productsStore.products, isEmpty);
+      });
+    });
+    test('goToFirstPage method', () {
+      final productsStore = ProductsStore();
+      productsStore.page = 2;
+      when(productsStore.goToFirstPage());
+
+      expect(productsStore.page, 1);
     });
   });
 }

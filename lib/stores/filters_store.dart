@@ -23,4 +23,9 @@ abstract class FiltersStoreBase with Store {
       selectedMarkets.remove(market);
     }
   }
+
+  @action
+  cleanSelectedMarkets() async {
+    selectedMarkets.clear();
+  }
 }
