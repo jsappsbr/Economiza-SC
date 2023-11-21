@@ -8,7 +8,7 @@
             "name": "batcave",
             "request": "launch",
             "type": "dart",
-            "toolArgs": ["--dart-define-from-file",".env"],
+            "toolArgs": ["--dart-define-from-file",".env"]
         }
     ]
 }
