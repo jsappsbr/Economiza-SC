@@ -50,7 +50,10 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: const Color(0xffff3131),
-          onPressed: _productsStore.cleanProductSelection,
+          onPressed: () {
+            _productsStore.cleanProducts();  
+            _productsStore.fetchProducts(); 
+          },
           child: const Icon(Icons.search),
         ),
         body: Column(
@@ -62,8 +65,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      decoration: const InputDecoration(
-                          hintText: 'Digite o nome de um produto'),
+                      decoration: const InputDecoration(hintText: 'Digite o nome de um produto'),
                       onChanged: _filtersStore.updateSearch,
                     ),
                   ),
@@ -75,15 +77,13 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: ListView.builder(
                   controller: _productsStore.scrollController,
-                  itemCount: _productsStore.products.length <
-                          _productsStore.productsPerPage
+                  itemCount: _productsStore.products.length < _productsStore.productsPerPage
                       ? _productsStore.products.length
                       : _productsStore.products.length + 1,
                   itemBuilder: (BuildContext context, int index) {
                     if (index < _productsStore.products.length) {
                       final product = _productsStore.products[index];
-                      final market = _marketsStore.markets.firstWhereOrNull(
-                          (market) => market.id == product.marketId);
+                      final market = _marketsStore.markets.firstWhereOrNull((market) => market.id == product.marketId);
                       return Card(
                         child: Container(
                           padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
@@ -94,18 +94,15 @@ class _HomePageState extends State<HomePage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Image.network(product.picture,
-                                        height: 120, width: 120),
+                                    Image.network(product.picture, height: 120, width: 120),
                                     ExpandButton(product: product),
                                   ],
                                 ),
                               ),
                               Expanded(
                                 child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       product.name,
@@ -114,8 +111,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Text(
                                       "R\$ ${product.price.toStringAsFixed(2)}",
-                                      style: const TextStyle(
-                                          color: Colors.green, fontSize: 16),
+                                      style: const TextStyle(color: Colors.green, fontSize: 16),
                                     ),
                                     Text(market?.name ?? ''),
                                   ],
@@ -130,10 +126,7 @@ class _HomePageState extends State<HomePage> {
                     }
                   }),
             ),
-            _productsStore.productsLoading
-                ? const LinearProgressIndicator(
-                    color: Colors.grey, backgroundColor: Colors.white60)
-                : Container(),
+            _productsStore.productsLoading ? const LinearProgressIndicator(color: Colors.grey, backgroundColor: Colors.white60) : Container(),
           ],
         ),
       );
