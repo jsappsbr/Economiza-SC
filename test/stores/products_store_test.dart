@@ -12,6 +12,17 @@ import 'products_store_test.mocks.dart';
 
 void main() {
   final mockProductsService = MockProductsService();
+  final List<Product> mockedProducts = [
+    Product(
+      id: 1,
+      name: 'Product 1',
+      marketId: 1,
+      price: 1,
+      picture: '',
+      link: '',
+      sku: '',
+    )
+  ];
 
   setUp(() {
     reset(mockProductsService);
@@ -24,20 +35,8 @@ void main() {
   });
 
   group('ProductsStore class', () {
-    group('fetchProducts method', () {
-      test('products are properly fetched', () async {
-        final List<Product> mockedProducts = [
-          Product(
-            id: 1,
-            name: 'Product 1',
-            marketId: 1,
-            price: 1,
-            picture: '',
-            link: '',
-            sku: '',
-          )
-        ];
-
+    group('fetchProducts action', () {
+      test('When the "fetchProducts" action is called, products are fetched and added to the products observable successfully', () async {
         when(mockProductsService.search('', 1, 20, marketIds: [])).thenAnswer((_) async => mockedProducts);
 
         final productsStore = ProductsStore();
@@ -48,7 +47,8 @@ void main() {
         expect(productsStore.productsLoading, false);
         verify(mockProductsService.search('', 1, 20, marketIds: [])).called(1);
       });
-      test('ProductsService\'s search method returns an error', () async {
+      test('When the "fetchProducts" action is called, the ProductsService class\'s search method returns an error and the products are not fetched',
+          () async {
         when(mockProductsService.search('', 1, 20, marketIds: [])).thenThrow(Exception());
 
         final productsStore = ProductsStore();
@@ -60,19 +60,19 @@ void main() {
         verify(mockProductsService.search('', 1, 20, marketIds: [])).called(1);
       });
     });
-    group('cleanProductSelection method', () {
-      test('products are cleaned succesfully', () {
+    group('cleanProductSelection action', () {
+      test('When the "cleanProductSelection" action is called, the products are removed from the products observable succesfully', () {
         final productsStore = ProductsStore();
-        productsStore.products.add(Product(id: 1, marketId: 1, name: '', price: 1, picture: '', link: '', sku: ''));
-        when(productsStore.cleanSelectedProducts());
+        productsStore.products.add(mockedProducts.first);
+        productsStore.cleanProducts();
 
         expect(productsStore.products, isEmpty);
       });
     });
-    test('goToFirstPage method', () {
+    test('goToFirstPage action', () {
       final productsStore = ProductsStore();
       productsStore.page = 2;
-      when(productsStore.goToFirstPage());
+      productsStore.goToFirstPage();
 
       expect(productsStore.page, 1);
     });

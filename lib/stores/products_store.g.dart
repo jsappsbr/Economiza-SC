@@ -81,13 +81,12 @@ mixin _$ProductsStore on ProductsStoreBase, Store {
     return _$fetchProductsAsyncAction.run(() => super.fetchProducts());
   }
 
-  late final _$cleanSelectedProductsAsyncAction =
-      AsyncAction('ProductsStoreBase.cleanSelectedProducts', context: context);
+  late final _$cleanProductsAsyncAction =
+      AsyncAction('ProductsStoreBase.cleanProducts', context: context);
 
   @override
-  Future cleanSelectedProducts() {
-    return _$cleanSelectedProductsAsyncAction
-        .run(() => super.cleanSelectedProducts());
+  Future cleanProducts() {
+    return _$cleanProductsAsyncAction.run(() => super.cleanProducts());
   }
 
   late final _$ProductsStoreBaseActionController =

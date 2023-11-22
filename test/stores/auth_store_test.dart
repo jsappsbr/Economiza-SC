@@ -25,64 +25,64 @@ void main() {
     Modular.destroy();
   });
 
-  group('when the authentication succeeds', () {
-    test('it sets the user as authenticated', () async {
-      final user = User(
-        id: 1,
-        name: 'Test User',
-        email: email,
-      );
+  group('AuthStore class', () {
+    group('login action', () {
+      test('When the login action is called, the user is authenticated successfully', () async {
+        final user = User(
+          id: 1,
+          name: 'Test User',
+          email: email,
+        );
 
-      when(mockAuthService.login(email, password)).thenAnswer((_) async => user);
+        when(mockAuthService.login(email, password)).thenAnswer((_) async => user);
 
-      final authStore = AuthStore();
+        final authStore = AuthStore();
 
-      await authStore.login(email, password);
+        await authStore.login(email, password);
 
-      expect(authStore.isLogged, true);
-      expect(authStore.isAuthenticating, false);
-      expect(authStore.user, user);
-      verify(mockAuthService.login(email, password)).called(1);
-    });
-  });
+        expect(authStore.isLogged, true);
+        expect(authStore.isAuthenticating, false);
+        expect(authStore.user, user);
+        verify(mockAuthService.login(email, password)).called(1);
+      });
+      test('When the login action is called, the user is not authenticated successfully', () async {
+        when(mockAuthService.login(any, any)).thenThrow(Exception());
 
-  group('when the authentication fails', () {
-    test('it sets the user as not authenticated', () async {
-      when(mockAuthService.login(any, any)).thenThrow(Exception());
+        final authStore = AuthStore();
 
-      final authStore = AuthStore();
+        await authStore.login(email, password);
 
-      await authStore.login(email, password);
-
-      expect(authStore.isLogged, false);
-      expect(authStore.isAuthenticating, false);
-      expect(authStore.user, null);
-      verify(mockAuthService.login(email, password)).called(1);
-    });
-  });
-  group('Logout method', () {
-    test('User is logged out successfully', () async {
-      final authStore = AuthStore();
-      authStore.user = User(id: 1, name: 'Test User', email: email);
-      when(mockAuthService.logout()).thenAnswer((_) async {});
-
-      await authStore.logout();
-
-      expect(authStore.isLogged, false);
-      expect(authStore.user, null);
-      verify(mockAuthService.logout()).called(1);
+        expect(authStore.isLogged, false);
+        expect(authStore.isAuthenticating, false);
+        expect(authStore.user, null);
+        verify(mockAuthService.login(email, password)).called(1);
+      });
     });
 
-    test('User is not logged out', () async {
-      final authStore = AuthStore();
-      authStore.isLogged = true;
-      authStore.user = User(id: 1, name: 'Test User', email: email);
-      when(mockAuthService.logout()).thenThrow(Exception());
-      await authStore.logout();
+    group('logout action', () {
+      test('When the logout action is called, the user is logged out successfully', () async {
+        final authStore = AuthStore();
+        authStore.user = User(id: 1, name: 'Test User', email: email);
+        when(mockAuthService.logout()).thenAnswer((_) async {});
 
-      expect(authStore.isLogged, true);
-      expect(authStore.user, isNotNull);
-      verify(mockAuthService.logout()).called(1);
+        await authStore.logout();
+
+        expect(authStore.isLogged, false);
+        expect(authStore.user, null);
+        verify(mockAuthService.logout()).called(1);
+      });
+
+      test('When the logout action is called, the user is not logged out successfully', () async {
+        final authStore = AuthStore();
+        authStore.isLogged = true;
+        authStore.user = User(id: 1, name: 'Test User', email: email);
+        when(mockAuthService.logout()).thenThrow(Exception());
+        await authStore.logout();
+
+        expect(authStore.isLogged, true);
+        expect(authStore.user, isNotNull);
+        verify(mockAuthService.logout()).called(1);
+      });
     });
   });
 }

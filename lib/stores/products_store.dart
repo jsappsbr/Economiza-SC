@@ -68,7 +68,7 @@ abstract class ProductsStoreBase with Store {
   }
 
   @action
-  cleanSelectedProducts() async {
+  cleanProducts() async {
     products.clear();
   }
 

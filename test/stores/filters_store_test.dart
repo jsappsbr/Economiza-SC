@@ -18,24 +18,24 @@ void main() {
   });
 
   group('FilterStore class', () {
-    group('updateSearch method', () {
-      test('The value of search is updated succesfully', () {
+    group('updateSearch action', () {
+      test('When the "updateSearch" action is called, the search value is updated', () {
         String newValue = 'newValue';
         final filterStore = FiltersStore();
         filterStore.search = mobx.Observable('');
-        when(filterStore.updateSearch(newValue));
+        filterStore.updateSearch(newValue);
 
         expect(filterStore.search.value, newValue);
       });
     });
-    group('changeSelectedMarkets', () {
-      test('New Market is added successfully when isSelected is true', () {
+    group('changeSelectedMarkets action', () {
+      test('When the "changeSelectedMarkets" action is called with a market that\'s selected, the market will be added to the list of selected markets', () {
         final filterStore = FiltersStore();
         when(filterStore.changeSelectedMarkets(market, true));
 
         expect(filterStore.selectedMarkets, contains(market));
       });
-      test('A given market is removed successfully when isSelected is false', () {
+      test('When the "changeSelectedMarkets" action is called with a market that\'s not selected, the market will be removed from the list of selected markets', () {
         final filterStore = FiltersStore();
         filterStore.selectedMarkets.add(market);
         when(filterStore.changeSelectedMarkets(market, false));
@@ -43,11 +43,11 @@ void main() {
         expect(filterStore.selectedMarkets, isNot(contains(market)));
       });
     });
-    group('cleanSelectedMarkets method', () {
-      test('selectedMarkets are cleaned succesfully', () {
+    group('cleanSelectedMarkets action', () {
+      test('When the "cleanSelectedMarkets" action is called, all markets are removed from the list of selectedMarkets', () {
         final filterStore = FiltersStore();
         filterStore.selectedMarkets.add(market);
-        when(filterStore.cleanSelectedMarkets());
+        filterStore.cleanSelectedMarkets();
 
         expect(filterStore.selectedMarkets, isEmpty);
       });
