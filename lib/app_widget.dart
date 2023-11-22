@@ -1,4 +1,5 @@
 import 'package:economiza_sc/stores/auth_store.dart';
+import 'package:economiza_sc/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -28,13 +29,14 @@ class _AppWidgetState extends State<AppWidget> {
             color: Colors.white,
           ),
           child: const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(color: Colors.red),
           ),
         );
       }
 
       return MaterialApp.router(
         debugShowCheckedModeBanner: false,
+        theme: lightTheme,
         title: 'Economiza SC',
         routerConfig: Modular.routerConfig,
       );

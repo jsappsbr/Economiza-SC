@@ -13,9 +13,14 @@ class FullImageModal extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            constraints: const BoxConstraints(maxHeight: 427, maxWidth: 372),
-            child: Image.network(product.picture),
+          SizedBox(
+            height: 372,
+            width: 372,
+            child: ListView(
+              children: [
+                Image.network(product.picture),
+              ],
+            ),
           ),
         ],
       ),

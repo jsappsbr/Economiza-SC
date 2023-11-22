@@ -42,9 +42,10 @@ class _LoginFormState extends State<LoginForm> {
               const LogoWidget(assetPath: 'assets/images/logo_full_economiza.png'),
               const SizedBox(height: 30),
               TextFormField(
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
                 key: const Key('emailField'),
                 controller: _emailController,
-                decoration: const InputDecoration(hintText: 'E-mail'),
+                decoration: InputDecoration(hintText: 'E-mail', hintStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.grey)),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Campo obrigatório';
@@ -54,6 +55,7 @@ class _LoginFormState extends State<LoginForm> {
                 },
               ),
               TextFormField(
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
                   key: const Key('passwordField'),
                   controller: _passwordController,
                   obscureText: true,
@@ -69,16 +71,13 @@ class _LoginFormState extends State<LoginForm> {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Observer(builder: (_) {
                   return ElevatedButton(
-                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffff3131))),
                     key: const Key('loginButton'),
                     onPressed: () => _authStore.isAuthenticating ? null : _handleSubmit(context),
                     child: _authStore.isAuthenticating
                         ? const SizedBox(
                             width: 20,
                             height: 20,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ),
+                            child: CircularProgressIndicator(),
                           )
                         : const Text('Entrar'),
                   );

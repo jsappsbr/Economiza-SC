@@ -45,16 +45,21 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
       return AlertDialog(
+        backgroundColor: Colors.white,
         title: Row(
           children: [
-            const Text(
+            Text(
               'Selecione as opções desejadas:',
-              style: TextStyle(fontSize: 14),
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
             ),
             const Spacer(),
-            IconButton(
-              onPressed: _closeModal,
-              icon: const Icon(Icons.clear),
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: IconButton(
+                onPressed: _closeModal,
+                icon: const Icon(Icons.clear, color: Colors.black),
+                hoverColor: Colors.grey.shade300, 
+              ),
             ),
           ],
         ),
@@ -75,12 +80,10 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
         ),
         actions: <Widget>[
           ElevatedButton(
-            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.grey)),
             onPressed: _clearSelection,
             child: const Text('Limpar Seleção'),
           ),
           ElevatedButton(
-            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffff3131))),
             onPressed: _submitSelection,
             child: const Text('Confirmar'),
           ),
