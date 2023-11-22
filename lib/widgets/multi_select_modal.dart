@@ -27,7 +27,7 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
 
   void _clearSelection() async {
     _productsStore.goToFirstPage();
-    Future.wait<dynamic>([
+    await Future.wait([
       _filtersStore.cleanSelectedMarkets(),
       _productsStore.cleanProducts(),
       _productsStore.fetchProducts(),
@@ -38,7 +38,7 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
 
   void _submitSelection() async {
     _productsStore.goToFirstPage();
-    Future.wait<dynamic>([
+    await Future.wait([
       _productsStore.cleanProducts(),
       _productsStore.fetchProducts(),
     ]);
