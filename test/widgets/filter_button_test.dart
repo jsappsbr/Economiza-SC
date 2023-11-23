@@ -29,7 +29,7 @@ void main() {
       expect(tester.widget<ElevatedButton>(find.byType(ElevatedButton)).style!.backgroundColor!.resolve({}), Colors.grey);
       filtersStore.changeSelectedMarkets(Market(id: 0, name: 'Walmart', website: 'walmart.com'), true);
       await tester.pump();
-      expect(tester.widget<ElevatedButton>(find.byType(ElevatedButton)).style!.backgroundColor!.resolve({}), Colors.blue);
+      expect(tester.widget<ElevatedButton>(find.byType(ElevatedButton)).style!.backgroundColor!.resolve({}), Colors.red);
     });
 
     testWidgets('A modal is open when the user clicks on FilterButton', (tester) async {
@@ -46,7 +46,7 @@ void main() {
 
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
-      expect(find.byType(AlertDialog), findsWidgets);
+      expect(find.byType(AlertDialog), findsOneWidget);
     });
   });
 }
