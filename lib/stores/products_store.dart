@@ -12,6 +12,7 @@ class ProductsStore = ProductsStoreBase with _$ProductsStore;
 
 abstract class ProductsStoreBase with Store {
   final _filtersStore = Modular.get<FiltersStore>();
+  final _productsService = Modular.get<ProductsService>();
 
   @observable
   ObservableList<Product> products = ObservableList<Product>();
@@ -46,7 +47,7 @@ abstract class ProductsStoreBase with Store {
 
     try {
       productsLoading = true;
-      final searchResult = await ProductsService().search(
+      final searchResult = await _productsService.search(
         _filtersStore.search.value,
         page,
         productsPerPage,
@@ -67,17 +68,12 @@ abstract class ProductsStoreBase with Store {
   }
 
   @action
-  cleanProductSelection() async {
-    page = 1;
+  cleanProducts() async {
     products.clear();
-    fetchProducts();
   }
 
   @action
-  cleanProductAndMarketSelection() async {
+  goToFirstPage() {
     page = 1;
-    _filtersStore.selectedMarkets.clear();
-    products.clear();
-    fetchProducts();
   }
 }

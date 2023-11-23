@@ -6,7 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class MultiSelectModal extends StatefulWidget {
-  const MultiSelectModal({Key? key}) : super(key: key);
+  const MultiSelectModal({super.key});
 
   @override
   State<MultiSelectModal> createState() => _MultiSelectModalState();
@@ -25,14 +25,23 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
     );
   }
 
-  void _clearSelection() {
-    _productsStore.cleanProductAndMarketSelection();
+  void _clearSelection() async {
+    _productsStore.goToFirstPage();
+    await Future.wait([
+      _filtersStore.cleanSelectedMarkets(),
+      _productsStore.cleanProducts(),
+      _productsStore.fetchProducts(),
+    ]);
     _closeModal();
     _scrollToTop();
   }
 
   void _submitSelection() async {
-    _productsStore.cleanProductSelection();
+    _productsStore.goToFirstPage();
+    await Future.wait([
+      _productsStore.cleanProducts(),
+      _productsStore.fetchProducts(),
+    ]);
     _closeModal();
     _scrollToTop();
   }

@@ -81,23 +81,12 @@ mixin _$ProductsStore on ProductsStoreBase, Store {
     return _$fetchProductsAsyncAction.run(() => super.fetchProducts());
   }
 
-  late final _$cleanProductSelectionAsyncAction =
-      AsyncAction('ProductsStoreBase.cleanProductSelection', context: context);
+  late final _$cleanProductsAsyncAction =
+      AsyncAction('ProductsStoreBase.cleanProducts', context: context);
 
   @override
-  Future cleanProductSelection() {
-    return _$cleanProductSelectionAsyncAction
-        .run(() => super.cleanProductSelection());
-  }
-
-  late final _$cleanProductAndMarketSelectionAsyncAction = AsyncAction(
-      'ProductsStoreBase.cleanProductAndMarketSelection',
-      context: context);
-
-  @override
-  Future cleanProductAndMarketSelection() {
-    return _$cleanProductAndMarketSelectionAsyncAction
-        .run(() => super.cleanProductAndMarketSelection());
+  Future cleanProducts() {
+    return _$cleanProductsAsyncAction.run(() => super.cleanProducts());
   }
 
   late final _$ProductsStoreBaseActionController =
@@ -109,6 +98,17 @@ mixin _$ProductsStore on ProductsStoreBase, Store {
         name: 'ProductsStoreBase.initScrollController');
     try {
       return super.initScrollController();
+    } finally {
+      _$ProductsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic goToFirstPage() {
+    final _$actionInfo = _$ProductsStoreBaseActionController.startAction(
+        name: 'ProductsStoreBase.goToFirstPage');
+    try {
+      return super.goToFirstPage();
     } finally {
       _$ProductsStoreBaseActionController.endAction(_$actionInfo);
     }

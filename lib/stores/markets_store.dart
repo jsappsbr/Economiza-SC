@@ -1,5 +1,6 @@
 import 'package:economiza_sc/models/market.dart';
 import 'package:economiza_sc/services/markets_service.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'markets_store.g.dart';
@@ -7,6 +8,8 @@ part 'markets_store.g.dart';
 class MarketsStore = MarketsStoreBase with _$MarketsStore;
 
 abstract class MarketsStoreBase with Store {
+  final _marketsService = Modular.get<MarketsService>();
+
   @observable
   ObservableList<Market> markets = ObservableList<Market>();
 
@@ -18,7 +21,7 @@ abstract class MarketsStoreBase with Store {
 
   @action
   fetchMarkets() async {
-    final fetchedMarkets = await MarketsService().search();
+    final fetchedMarkets = await _marketsService.search();
     markets.addAll(fetchedMarkets);
   }
 
