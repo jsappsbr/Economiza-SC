@@ -40,7 +40,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Test Product'), findsOneWidget);
-      expect(find.byType(Image), findsOneWidget);
+      expect(find.byType(AlertDialog), findsOneWidget);
     });
   });
 }

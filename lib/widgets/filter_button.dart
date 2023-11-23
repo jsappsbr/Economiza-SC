@@ -37,18 +37,26 @@ class _FilterButtonState extends State<FilterButton> {
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.grey)),
               onPressed: () => _showMultiSelectModal(),
               child: const Row(children: [
-                Icon(Icons.filter_list),
+                Icon(Icons.filter_list, color: Colors.white),
                 SizedBox(width: 5),
-                Text('Filtros'),
+                Text('Filtros', style: TextStyle(color: Colors.white)),
               ]),
             )
           : ElevatedButton(
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.red)),
               onPressed: () => _showMultiSelectModal(),
               child: Row(children: [
-                Text(_filtersStore.selectedMarkets.length.toString()),
+                Text(_filtersStore.selectedMarkets.length.toString(), style: const TextStyle(color: Colors.white)),
                 const SizedBox(width: 5),
-                _filtersStore.selectedMarkets.length == 1 ? const Text('Mercado') : const Text('Mercados')
+                _filtersStore.selectedMarkets.length == 1
+                    ? const Text(
+                        'Mercado',
+                        style: TextStyle(color: Colors.white),
+                      )
+                    : const Text(
+                        'Mercados',
+                        style: TextStyle(color: Colors.white),
+                      )
               ]),
             );
     });

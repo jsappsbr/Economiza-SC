@@ -15,9 +15,12 @@ class _CustomPopUpMenuState extends State<CustomPopUpMenu> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      icon: const Icon(Icons.person),
+      icon: Icon(
+        Icons.person,
+        color: Theme.of(context).iconTheme.color,
+      ),
+      color: Colors.white,
       splashRadius: 20.0,
-      shadowColor: Colors.grey,
       tooltip: 'Menu',
       position: PopupMenuPosition.under,
       itemBuilder: (context) => <PopupMenuEntry<Widget>>[

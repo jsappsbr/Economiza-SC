@@ -40,10 +40,9 @@ class _HomePageState extends State<HomePage> {
     return Observer(builder: (context) {
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xffff3131),
           leading: Image.asset('assets/images/logo_simple_economiza.png'),
           leadingWidth: 50,
-          title: const Text('Economiza SC'),
+          title: const Text('Economiza SC', style: TextStyle(color: Colors.white)),
           actions: const [
             CustomPopUpMenu(),
           ],
@@ -106,14 +105,14 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     Text(
                                       product.name,
-                                      style: const TextStyle(fontSize: 20),
+                                      style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.red),
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
                                       "R\$ ${product.price.toStringAsFixed(2)}",
-                                      style: const TextStyle(color: Colors.green, fontSize: 16),
+                                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
                                     ),
-                                    Text(market?.name ?? ''),
+                                    Text(market?.name ?? '', style: const TextStyle(color: Colors.black)),
                                   ],
                                 ),
                               ),
