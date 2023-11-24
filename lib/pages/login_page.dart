@@ -39,7 +39,7 @@ class _LoginFormState extends State<LoginForm> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const LogoWidget(assetPath: 'assets/images/logo_full_economiza.png'),
+              const LogoWidget(assetPath: 'assets/images/logo_full_transparent_bag.png'),
               const SizedBox(height: 30),
               TextFormField(
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),

@@ -67,7 +67,7 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
               child: IconButton(
                 onPressed: _closeModal,
                 icon: const Icon(Icons.clear, color: Colors.black),
-                hoverColor: Colors.grey.shade300, 
+                hoverColor: Colors.grey.shade200, 
               ),
             ),
           ],
