@@ -48,7 +48,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color(0xffff3131),
           onPressed: () {
             _productsStore.cleanProducts();  
             _productsStore.fetchProducts(); 
@@ -64,6 +63,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
                       decoration: const InputDecoration(hintText: 'Digite o nome de um produto'),
                       onChanged: _filtersStore.updateSearch,
                     ),
