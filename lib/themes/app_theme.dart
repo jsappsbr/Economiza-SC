@@ -23,4 +23,7 @@ ThemeData lightTheme = ThemeData(
     buttonTheme: const ButtonThemeData(
     buttonColor: Colors.red, 
   ),
-);
+  checkboxTheme: CheckboxThemeData(
+    checkColor: MaterialStateColor.resolveWith((_) => Colors.white),
+    fillColor: MaterialStateColor.resolveWith((states) => states.contains(MaterialState.selected) ? Colors.red : Colors.white)),
+  );
