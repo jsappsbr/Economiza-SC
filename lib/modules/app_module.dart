@@ -1,4 +1,5 @@
 import 'package:economiza_sc/guards/auth_guard.dart';
+import 'package:economiza_sc/pages/sign_up_page.dart';
 import 'package:economiza_sc/services/auth_service.dart';
 import 'package:economiza_sc/services/markets_service.dart';
 import 'package:economiza_sc/services/products_service.dart';
@@ -46,5 +47,6 @@ class AppModule extends Module {
   void routes(r) {
     r.child('/', child: (_) => const HomePage(), guards: [AuthGuard()]);
     r.child('/login', child: (_) => const LoginPage());
+    r.child('/sign-up', child: (_) => const SignUpPage());
   }
 }

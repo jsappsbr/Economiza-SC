@@ -4,25 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: LoginForm()),
+      body: Center(child: SignUpForm()),
     );
   }
 }
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({super.key});
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _SignUpFormState extends State<SignUpForm> {
   final _authStore = Modular.get<AuthStore>();
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController(text: 'test@test.com');
@@ -87,15 +87,18 @@ class _LoginFormState extends State<LoginForm> {
                             height: 20,
                             child: CircularProgressIndicator(),
                           )
-                        : const Text('Entrar'),
+                        : const Text('Criar conta'),
                   );
                 }),
               ),
-               Padding(
-                padding: const EdgeInsets.fromLTRB(0,16,0,0),
-                child: Text('Não possui uma conta ainda?', style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                child: Text(
+                  'Já possui uma conta?',
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
+                ),
               ),
-              TextButton(onPressed: () => Modular.to.navigate('/sign-up'), child: const Text('Criar conta')),
+              TextButton(onPressed: () => Modular.to.navigate('/login'), child: const Text('Entrar')),
             ],
           ),
         ),
