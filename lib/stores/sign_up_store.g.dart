@@ -25,6 +25,39 @@ mixin _$SignUpStore on SignUpStoreBase, Store {
     });
   }
 
+  late final _$isPasswordVisibleAtom =
+      Atom(name: 'SignUpStoreBase.isPasswordVisible', context: context);
+
+  @override
+  bool get isPasswordVisible {
+    _$isPasswordVisibleAtom.reportRead();
+    return super.isPasswordVisible;
+  }
+
+  @override
+  set isPasswordVisible(bool value) {
+    _$isPasswordVisibleAtom.reportWrite(value, super.isPasswordVisible, () {
+      super.isPasswordVisible = value;
+    });
+  }
+
+  late final _$isPasswordConfirmationVisibleAtom = Atom(
+      name: 'SignUpStoreBase.isPasswordConfirmationVisible', context: context);
+
+  @override
+  bool get isPasswordConfirmationVisible {
+    _$isPasswordConfirmationVisibleAtom.reportRead();
+    return super.isPasswordConfirmationVisible;
+  }
+
+  @override
+  set isPasswordConfirmationVisible(bool value) {
+    _$isPasswordConfirmationVisibleAtom
+        .reportWrite(value, super.isPasswordConfirmationVisible, () {
+      super.isPasswordConfirmationVisible = value;
+    });
+  }
+
   late final _$signUpAsyncAction =
       AsyncAction('SignUpStoreBase.signUp', context: context);
 
@@ -35,10 +68,37 @@ mixin _$SignUpStore on SignUpStoreBase, Store {
         .run(() => super.signUp(name, email, password, passwordConfirmation));
   }
 
+  late final _$SignUpStoreBaseActionController =
+      ActionController(name: 'SignUpStoreBase', context: context);
+
+  @override
+  void changePasswordVisibility() {
+    final _$actionInfo = _$SignUpStoreBaseActionController.startAction(
+        name: 'SignUpStoreBase.changePasswordVisibility');
+    try {
+      return super.changePasswordVisibility();
+    } finally {
+      _$SignUpStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changePasswordConfirmationVisibility() {
+    final _$actionInfo = _$SignUpStoreBaseActionController.startAction(
+        name: 'SignUpStoreBase.changePasswordConfirmationVisibility');
+    try {
+      return super.changePasswordConfirmationVisibility();
+    } finally {
+      _$SignUpStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-isLoading: ${isLoading}
+isLoading: ${isLoading},
+isPasswordVisible: ${isPasswordVisible},
+isPasswordConfirmationVisible: ${isPasswordConfirmationVisible}
     ''';
   }
 }

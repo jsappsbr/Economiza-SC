@@ -13,6 +13,13 @@ abstract class SignUpStoreBase with Store {
   @observable
   bool isLoading = false;
 
+  @observable
+  bool isPasswordVisible = false;
+
+  @observable
+  bool isPasswordConfirmationVisible = false;
+
+
   @action
   Future<void> signUp(String name, String email, String password, String passwordConfirmation) async {
     try {
@@ -29,4 +36,10 @@ abstract class SignUpStoreBase with Store {
       isLoading = false;
     }
   }
+
+  @action
+  void changePasswordVisibility() => isPasswordVisible == false ? isPasswordVisible = true : isPasswordVisible = false;
+
+    @action
+  void changePasswordConfirmationVisibility() => isPasswordConfirmationVisible == false ? isPasswordConfirmationVisible = true : isPasswordConfirmationVisible = false;
 }
