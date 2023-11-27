@@ -120,9 +120,9 @@ class _SignUpFormState extends State<SignUpForm> {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Observer(builder: (_) {
                     return ElevatedButton(
-                      key: const Key('loginButton'),
-                      onPressed: () => _signUpStore.isCreatingUser ? null : _handleSubmit(context),
-                      child: _signUpStore.isCreatingUser
+                      key: const Key('signUpButton'),
+                      onPressed: () => _signUpStore.isLoading ? null : _handleSubmit(context),
+                      child: _signUpStore.isLoading
                           ? const SizedBox(
                               width: 20,
                               height: 20,

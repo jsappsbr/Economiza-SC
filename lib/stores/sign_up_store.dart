@@ -11,22 +11,22 @@ abstract class SignUpStoreBase with Store {
   final _signUpService = Modular.get<SignUpService>();
 
   @observable
-  bool isCreatingUser = false;
+  bool isLoading = false;
 
   @action
   Future<void> signUp(String name, String email, String password, String passwordConfirmation) async {
     try {
-      isCreatingUser = true;
+      isLoading = true;
 
       await Future.delayed(const Duration(seconds: 1));
       await _signUpService.signUp(name, email, password, passwordConfirmation);
 
-      isCreatingUser = false;
+      isLoading = false;
       Modular.to.navigate('/login');
     } catch (e) {
       debugPrint("Cadastro falhou: $e");
     } finally {
-      isCreatingUser = false;
+      isLoading = false;
     }
   }
 }

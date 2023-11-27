@@ -18,7 +18,6 @@ import 'package:dio/dio.dart';
 class AppModule extends Module {
   @override
   void binds(i) {
-    // SignUpStore
     i.addSingleton<AuthService>(() => AuthService());
     i.addSingleton<MarketsService>(() => MarketsService());
     i.addSingleton<ProductsService>(() => ProductsService());
