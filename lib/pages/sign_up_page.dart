@@ -96,7 +96,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
                           key: const Key('passwordConfirmationField'),
                           controller: _passwordConfirmationController,
-                          obscureText: _signUpStore.isPasswordObscure,
+                          obscureText: _signUpStore.isPasswordConfirmationObscure,
                           decoration: InputDecoration(
                               hintText: 'Confirmação de senha',
                               suffixIcon: IconButton(
