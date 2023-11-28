@@ -17,7 +17,7 @@ void main() {
 
   setUp(() {
     reset(mockAuthService);
-    Modular.init(AppModule());
+    Modular.init(CoreModule());
     Modular.replaceInstance<AuthService>(mockAuthService);
   });
 

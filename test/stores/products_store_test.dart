@@ -26,7 +26,7 @@ void main() {
 
   setUp(() {
     reset(mockProductsService);
-    Modular.init(AppModule());
+    Modular.init(CoreModule());
     Modular.replaceInstance<ProductsService>(mockProductsService);
   });
 

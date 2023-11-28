@@ -4,27 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: SignUpForm()),
-    );
-  }
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class SignUpForm extends StatefulWidget {
-  const SignUpForm({super.key});
-
-  @override
-  State<SignUpForm> createState() => _SignUpFormState();
-}
-
-class _SignUpFormState extends State<SignUpForm> {
-  final _signUpStore = Modular.get<SignUpStore>();
+class _SignUpPageState extends State<SignUpPage> {
+  final _signUpStore = SignUpStore();
   final _formKey = GlobalKey<FormState>();
+
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -51,7 +41,9 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
-      return ConstrainedBox(
+      return Scaffold(
+          body: Center(
+              child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 400),
         child: Form(
           key: _formKey,
@@ -153,7 +145,7 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
           ),
         ),
-      );
+      )));
     });
   }
 }

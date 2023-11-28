@@ -8,10 +8,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final appModule = AppModule();
 
   setUpAll(() async {
-    Modular.init(appModule);
+    Modular.init(CoreModule());
   });
 
   group('FilterButton widget', () {

@@ -24,8 +24,6 @@ abstract class SignUpStoreBase with Store {
   Future<void> signUp(String name, String email, String password, String passwordConfirmation) async {
     try {
       isLoading = true;
-
-      await Future.delayed(const Duration(seconds: 1));
       await _signUpService.signUp(name, email, password, passwordConfirmation);
 
       isLoading = false;

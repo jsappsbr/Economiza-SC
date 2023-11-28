@@ -10,7 +10,7 @@ void main() {
   final market = Market(id: 1, name: '', website: '');
 
   setUp(() {
-    Modular.init(AppModule());
+    Modular.init(CoreModule());
   });
 
   tearDown(() {
@@ -29,13 +29,17 @@ void main() {
       });
     });
     group('changeSelectedMarkets action', () {
-      test('When the "changeSelectedMarkets" action is called with a market that\'s selected, the market will be added to the list of selected markets', () {
+      test(
+          'When the "changeSelectedMarkets" action is called with a market that\'s selected, the market will be added to the list of selected markets',
+          () {
         final filterStore = FiltersStore();
         when(filterStore.changeSelectedMarkets(market, true));
 
         expect(filterStore.selectedMarkets, contains(market));
       });
-      test('When the "changeSelectedMarkets" action is called with a market that\'s not selected, the market will be removed from the list of selected markets', () {
+      test(
+          'When the "changeSelectedMarkets" action is called with a market that\'s not selected, the market will be removed from the list of selected markets',
+          () {
         final filterStore = FiltersStore();
         filterStore.selectedMarkets.add(market);
         when(filterStore.changeSelectedMarkets(market, false));
