@@ -11,6 +11,6 @@ class SignUpModule extends Module {
 
   @override
   void routes(r) {
-    r.child('/sign-up', child: (_) => const SignUpPage());
+    r.child('/', child: (_) => const SignUpPage());
   }
 }

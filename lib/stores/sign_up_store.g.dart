@@ -25,36 +25,52 @@ mixin _$SignUpStore on SignUpStoreBase, Store {
     });
   }
 
-  late final _$isPasswordVisibleAtom =
-      Atom(name: 'SignUpStoreBase.isPasswordVisible', context: context);
+  late final _$isPasswordObscureAtom =
+      Atom(name: 'SignUpStoreBase.isPasswordObscure', context: context);
 
   @override
-  bool get isPasswordVisible {
-    _$isPasswordVisibleAtom.reportRead();
-    return super.isPasswordVisible;
+  bool get isPasswordObscure {
+    _$isPasswordObscureAtom.reportRead();
+    return super.isPasswordObscure;
   }
 
   @override
-  set isPasswordVisible(bool value) {
-    _$isPasswordVisibleAtom.reportWrite(value, super.isPasswordVisible, () {
-      super.isPasswordVisible = value;
+  set isPasswordObscure(bool value) {
+    _$isPasswordObscureAtom.reportWrite(value, super.isPasswordObscure, () {
+      super.isPasswordObscure = value;
     });
   }
 
-  late final _$isPasswordConfirmationVisibleAtom = Atom(
-      name: 'SignUpStoreBase.isPasswordConfirmationVisible', context: context);
+  late final _$isPasswordConfirmationObscureAtom = Atom(
+      name: 'SignUpStoreBase.isPasswordConfirmationObscure', context: context);
 
   @override
-  bool get isPasswordConfirmationVisible {
-    _$isPasswordConfirmationVisibleAtom.reportRead();
-    return super.isPasswordConfirmationVisible;
+  bool get isPasswordConfirmationObscure {
+    _$isPasswordConfirmationObscureAtom.reportRead();
+    return super.isPasswordConfirmationObscure;
   }
 
   @override
-  set isPasswordConfirmationVisible(bool value) {
-    _$isPasswordConfirmationVisibleAtom
-        .reportWrite(value, super.isPasswordConfirmationVisible, () {
-      super.isPasswordConfirmationVisible = value;
+  set isPasswordConfirmationObscure(bool value) {
+    _$isPasswordConfirmationObscureAtom
+        .reportWrite(value, super.isPasswordConfirmationObscure, () {
+      super.isPasswordConfirmationObscure = value;
+    });
+  }
+
+  late final _$signUpSuccessAtom =
+      Atom(name: 'SignUpStoreBase.signUpSuccess', context: context);
+
+  @override
+  bool get signUpSuccess {
+    _$signUpSuccessAtom.reportRead();
+    return super.signUpSuccess;
+  }
+
+  @override
+  set signUpSuccess(bool value) {
+    _$signUpSuccessAtom.reportWrite(value, super.signUpSuccess, () {
+      super.signUpSuccess = value;
     });
   }
 
@@ -62,10 +78,10 @@ mixin _$SignUpStore on SignUpStoreBase, Store {
       AsyncAction('SignUpStoreBase.signUp', context: context);
 
   @override
-  Future<void> signUp(
-      String name, String email, String password, String passwordConfirmation) {
-    return _$signUpAsyncAction
-        .run(() => super.signUp(name, email, password, passwordConfirmation));
+  Future<void> signUp(String name, String email, String password,
+      String passwordConfirmation, BuildContext context) {
+    return _$signUpAsyncAction.run(() =>
+        super.signUp(name, email, password, passwordConfirmation, context));
   }
 
   late final _$SignUpStoreBaseActionController =
@@ -97,8 +113,9 @@ mixin _$SignUpStore on SignUpStoreBase, Store {
   String toString() {
     return '''
 isLoading: ${isLoading},
-isPasswordVisible: ${isPasswordVisible},
-isPasswordConfirmationVisible: ${isPasswordConfirmationVisible}
+isPasswordObscure: ${isPasswordObscure},
+isPasswordConfirmationObscure: ${isPasswordConfirmationObscure},
+signUpSuccess: ${signUpSuccess}
     ''';
   }
 }
