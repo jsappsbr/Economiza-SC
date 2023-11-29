@@ -3,7 +3,6 @@ import 'package:economiza_sc/services/sign_up_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class SignUpModule extends Module {
-  
   @override
   void binds(i) {
     i.addSingleton<SignUpService>(() => SignUpService());

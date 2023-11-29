@@ -14,7 +14,7 @@ class UnknownError implements Exception {}
 class SignUpService {
   Future<void> signUp(String name, String email, String password, String passwordConfirmation) async {
     final api = Modular.get<Dio>();
-
+    
     var response = await api.post('/signup', data: {
       'name': name,
       'email': email,
@@ -32,6 +32,6 @@ class SignUpService {
       throw TooManyRequests();
     } else {
       throw UnknownError();
-    }
+    } 
   }
 }

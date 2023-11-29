@@ -1,4 +1,5 @@
 import 'package:economiza_sc/guards/auth_guard.dart';
+import 'package:economiza_sc/keys/scaffold_key.dart';
 import 'package:economiza_sc/modules/sign_up_module.dart';
 import 'package:economiza_sc/services/auth_service.dart';
 import 'package:economiza_sc/services/markets_service.dart';
@@ -16,10 +17,10 @@ import 'package:dio/dio.dart';
 class CoreModule extends Module {
   @override
   void binds(i) {
+    i.addSingleton<ScaffoldKey>(() => ScaffoldKey());
     i.addSingleton<AuthService>(() => AuthService());
     i.addSingleton<MarketsService>(() => MarketsService());
     i.addSingleton<ProductsService>(() => ProductsService());
-
     i.addSingleton<AuthStore>(() => AuthStore());
     i.addSingleton<FiltersStore>(() => FiltersStore());
     i.addSingleton<MarketsStore>(() => MarketsStore());

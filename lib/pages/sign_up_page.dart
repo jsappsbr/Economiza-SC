@@ -1,3 +1,4 @@
+import 'package:economiza_sc/keys/scaffold_key.dart';
 import 'package:economiza_sc/stores/sign_up_store.dart';
 import 'package:economiza_sc/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final _scaffoldKey = Modular.get<ScaffoldKey>();
+  late final GlobalKey _scaffoldKeyValue;
   final _signUpStore = SignUpStore();
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -19,11 +22,17 @@ class _SignUpPageState extends State<SignUpPage> {
   final _passwordController = TextEditingController();
   final _passwordConfirmationController = TextEditingController();
 
-  _handleSubmit(BuildContext context) {
+  @override
+  initState() {
+    super.initState();
+    _scaffoldKeyValue = _scaffoldKey.getScaffoldKey;
+  }
+
+  _handleSubmit() {
     if (!_formKey.currentState!.validate()) {
       return;
     }
-    _signUpStore.signUp(_nameController.text, _emailController.text, _passwordController.text, _passwordConfirmationController.text, context);
+    _signUpStore.signUp(_nameController.text, _emailController.text, _passwordController.text, _passwordConfirmationController.text);
   }
 
   bool _isEmail(String input) {
@@ -35,6 +44,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
       return Scaffold(
+          key: _scaffoldKeyValue,
           body: Center(
               child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 400),
@@ -115,7 +125,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         child: Observer(builder: (_) {
                           return ElevatedButton(
                             key: const Key('signUpButton'),
-                            onPressed: () => _signUpStore.isLoading ? null : _handleSubmit(context),
+                            onPressed: () => _signUpStore.isLoading ? null : _handleSubmit(),
                             child: _signUpStore.isLoading
                                 ? const SizedBox(
                                     width: 20,

@@ -78,10 +78,10 @@ mixin _$SignUpStore on SignUpStoreBase, Store {
       AsyncAction('SignUpStoreBase.signUp', context: context);
 
   @override
-  Future<void> signUp(String name, String email, String password,
-      String passwordConfirmation, BuildContext context) {
-    return _$signUpAsyncAction.run(() =>
-        super.signUp(name, email, password, passwordConfirmation, context));
+  Future<void> signUp(
+      String name, String email, String password, String passwordConfirmation) {
+    return _$signUpAsyncAction
+        .run(() => super.signUp(name, email, password, passwordConfirmation));
   }
 
   late final _$SignUpStoreBaseActionController =
