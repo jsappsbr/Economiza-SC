@@ -97,8 +97,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   onPressed: () => _signUpStore.changePasswordVisibility(),
                                   icon: Icon(_signUpStore.isPasswordObscure == false ? Icons.visibility : Icons.visibility_off))),
                           validator: (value) {
-                            if (value == null || value.isEmpty || value.length < 4) {
+                            if (value == null || value.isEmpty) {
                               return 'Campo obrigatório';
+                            } else if (value.length < 4) {
+                              return 'Utilize no mínimo 4 caracteres';
                             }
                             return null;
                           }),
