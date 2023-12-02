@@ -49,7 +49,7 @@ class CoreModule extends Module {
   @override
   void routes(r) {
     r.child('/', child: (_) => const HomePage(), guards: [AuthGuard()]);
-    r.child('/login', child: (_) => const LoginPage());
+    r.child('/login', child: (_) => LoginPage(r.args.queryParams['email']));
     r.module('/sign-up', module: SignUpModule());
   }
 }

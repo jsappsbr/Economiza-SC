@@ -5,7 +5,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final String? email;
+
+  const LoginPage(this.email, {super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -16,6 +18,14 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController(text: 'test@test.com');
   final _passwordController = TextEditingController(text: 'password');
+
+  @override
+  initState() {
+    super.initState();
+    if (widget.email != null) {
+      _emailController.text = widget.email!;
+    }
+  }
 
   _handleSubmit(BuildContext context) {
     if (!_formKey.currentState!.validate()) {
@@ -38,13 +48,22 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const LogoWidget(assetPath: 'assets/images/logo_full_transparent_bag.png'),
+                const LogoWidget(
+                    assetPath: 'assets/images/logo_full_transparent_bag.png'),
                 const SizedBox(height: 30),
                 TextFormField(
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(color: Colors.black),
                   key: const Key('emailField'),
                   controller: _emailController,
-                  decoration: InputDecoration(hintText: 'E-mail', hintStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.grey)),
+                  decoration: InputDecoration(
+                      hintText: 'E-mail',
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: Colors.grey)),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Campo obrigatório';
@@ -54,7 +73,10 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
                 TextFormField(
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: Colors.black),
                     key: const Key('passwordField'),
                     controller: _passwordController,
                     obscureText: true,
@@ -71,7 +93,9 @@ class _LoginPageState extends State<LoginPage> {
                   child: Observer(builder: (_) {
                     return ElevatedButton(
                       key: const Key('loginButton'),
-                      onPressed: () => _authStore.isAuthenticating ? null : _handleSubmit(context),
+                      onPressed: () => _authStore.isAuthenticating
+                          ? null
+                          : _handleSubmit(context),
                       child: _authStore.isAuthenticating
                           ? const SizedBox(
                               width: 20,
@@ -86,10 +110,15 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: Text(
                     'Não possui uma conta ainda?',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: Colors.black),
                   ),
                 ),
-                TextButton(onPressed: () => Modular.to.navigate('/sign-up'), child: const Text('Criar conta')),
+                TextButton(
+                    onPressed: () => Modular.to.navigate('/sign-up/'),
+                    child: const Text('Criar conta')),
               ],
             ),
           ),

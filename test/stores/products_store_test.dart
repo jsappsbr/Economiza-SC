@@ -1,5 +1,5 @@
 import 'package:economiza_sc/models/product.dart';
-import 'package:economiza_sc/modules/app_module.dart';
+import 'package:economiza_sc/modules/core_module.dart';
 import 'package:economiza_sc/services/products_service.dart';
 import 'package:economiza_sc/stores/products_store.dart';
 import 'package:flutter_modular/flutter_modular.dart';

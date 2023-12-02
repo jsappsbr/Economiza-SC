@@ -1,5 +1,5 @@
 import 'package:economiza_sc/models/market.dart';
-import 'package:economiza_sc/modules/app_module.dart';
+import 'package:economiza_sc/modules/core_module.dart';
 import 'package:economiza_sc/stores/filters_store.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
