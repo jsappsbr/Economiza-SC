@@ -1,5 +1,4 @@
 import 'package:economiza_sc/guards/auth_guard.dart';
-import 'package:economiza_sc/keys/scaffold_key.dart';
 import 'package:economiza_sc/modules/sign_up_module.dart';
 import 'package:economiza_sc/services/auth_service.dart';
 import 'package:economiza_sc/services/markets_service.dart';
@@ -8,6 +7,7 @@ import 'package:economiza_sc/stores/auth_store.dart';
 import 'package:economiza_sc/stores/filters_store.dart';
 import 'package:economiza_sc/stores/products_store.dart';
 import 'package:economiza_sc/stores/markets_store.dart';
+import 'package:economiza_sc/services/snack_bar_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:economiza_sc/pages/home_page.dart';
 import 'package:economiza_sc/pages/login_page.dart';
@@ -17,7 +17,7 @@ import 'package:dio/dio.dart';
 class CoreModule extends Module {
   @override
   void binds(i) {
-    i.addSingleton<ScaffoldKey>(() => ScaffoldKey());
+    i.addSingleton<SnackBarService>(() => SnackBarService());
     i.addSingleton<AuthService>(() => AuthService());
     i.addSingleton<MarketsService>(() => MarketsService());
     i.addSingleton<ProductsService>(() => ProductsService());

@@ -15,20 +15,20 @@ class HttpException implements Exception {
 
   bool get isUnknown => statusCode == StatusCode.unknown;
 
-  HttpException(this.message, this.statusCode);
+  HttpException(this.statusCode, this.message);
 
   factory HttpException.fromDioException(DioException e) {
     final statusCode = e.response!.statusCode;
     final message = e.response?.statusMessage ?? e.message;
 
     if (statusCode == HttpStatus.found) {
-      return HttpException(message, StatusCode.found);
+      return HttpException(StatusCode.found, message);
     } else if (statusCode == HttpStatus.unprocessableEntity) {
-      return HttpException(message, StatusCode.unprocessableEntity);
+      return HttpException(StatusCode.unprocessableEntity, message);
     } else if (statusCode == HttpStatus.internalServerError) {
-      return HttpException(message, StatusCode.internalServerError);
+      return HttpException(StatusCode.internalServerError, message);
     } else {
-      return HttpException(message, StatusCode.unknown);
+      return HttpException(StatusCode.unknown, message);
     }
   }
 }

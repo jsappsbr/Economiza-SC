@@ -58,30 +58,12 @@ mixin _$SignUpStore on SignUpStoreBase, Store {
     });
   }
 
-  late final _$signUpSuccessAtom =
-      Atom(name: 'SignUpStoreBase.signUpSuccess', context: context);
-
-  @override
-  bool get signUpSuccess {
-    _$signUpSuccessAtom.reportRead();
-    return super.signUpSuccess;
-  }
-
-  @override
-  set signUpSuccess(bool value) {
-    _$signUpSuccessAtom.reportWrite(value, super.signUpSuccess, () {
-      super.signUpSuccess = value;
-    });
-  }
-
   late final _$signUpAsyncAction =
       AsyncAction('SignUpStoreBase.signUp', context: context);
 
   @override
-  Future<void> signUp(
-      String name, String email, String password, String passwordConfirmation) {
-    return _$signUpAsyncAction
-        .run(() => super.signUp(name, email, password, passwordConfirmation));
+  Future<void> signUp(String name, String email, String password) {
+    return _$signUpAsyncAction.run(() => super.signUp(name, email, password));
   }
 
   late final _$SignUpStoreBaseActionController =
@@ -114,8 +96,7 @@ mixin _$SignUpStore on SignUpStoreBase, Store {
     return '''
 isLoading: ${isLoading},
 isPasswordObscure: ${isPasswordObscure},
-isPasswordConfirmationObscure: ${isPasswordConfirmationObscure},
-signUpSuccess: ${signUpSuccess}
+isPasswordConfirmationObscure: ${isPasswordConfirmationObscure}
     ''';
   }
 }

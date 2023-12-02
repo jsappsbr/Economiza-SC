@@ -3,8 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:economiza_sc/exceptions/http_exception.dart';
 
 class SignUpService {
-  Future<void> signUp(String name, String email, String password,
-      String passwordConfirmation) async {
+  Future<void> signUp(String name, String email, String password) async {
     try {
       final api = Modular.get<Dio>();
 
@@ -12,7 +11,7 @@ class SignUpService {
         'name': name,
         'email': email,
         'password': password,
-        'password_confirmation': passwordConfirmation,
+        'password_confirmation': password,
       });
 
       return response.data;

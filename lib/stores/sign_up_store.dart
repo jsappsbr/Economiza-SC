@@ -1,7 +1,5 @@
 import 'package:economiza_sc/services/sign_up_service.dart';
-import 'package:economiza_sc/widgets/app_snack_bar.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:economiza_sc/services/snack_bar_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:economiza_sc/exceptions/http_exception.dart';
@@ -11,8 +9,8 @@ part 'sign_up_store.g.dart';
 class SignUpStore = SignUpStoreBase with _$SignUpStore;
 
 abstract class SignUpStoreBase with Store {
-  final scaffoldKey = GlobalKey();
   final _signUpService = Modular.get<SignUpService>();
+  final _snackBarService = Modular.get<SnackBarService>();
 
   @observable
   bool isLoading = false;
@@ -23,20 +21,14 @@ abstract class SignUpStoreBase with Store {
   @observable
   bool isPasswordConfirmationObscure = true;
 
-  @observable
-  bool signUpSuccess = false;
-
   @action
-  Future<void> signUp(String name, String email, String password,
-      String passwordConfirmation) async {
+  Future<void> signUp(String name, String email, String password) async {
     try {
       isLoading = true;
 
-      await _signUpService.signUp(name, email, password, passwordConfirmation);
-
-      await AppSnackBar.show(
-        scaffoldKey.currentContext!,
-        const Text('Cadastro realizado. Faça login para continuar.'),
+      await _signUpService.signUp(name, email, password);
+      await _snackBarService.show(
+        'Cadastro realizado. Faça login para continuar.',
         duration: const Duration(seconds: 2),
       );
 
@@ -55,11 +47,7 @@ abstract class SignUpStoreBase with Store {
             'Algo deu errado ao realizar o cadastro. Tente novamente mais tarde.';
       }
 
-      AppSnackBar.show(
-        scaffoldKey.currentContext!,
-        Text(message),
-        duration: Duration(seconds: 3),
-      );
+      _snackBarService.show(message, duration: Duration(seconds: 3));
     } finally {
       isLoading = false;
     }
