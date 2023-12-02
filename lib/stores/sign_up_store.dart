@@ -54,13 +54,9 @@ abstract class SignUpStoreBase with Store {
   }
 
   @action
-  void changePasswordVisibility() => isPasswordObscure == true
-      ? isPasswordObscure = false
-      : isPasswordObscure = true;
+  void changePasswordVisibility() => isPasswordObscure = !isPasswordObscure;
 
   @action
   void changePasswordConfirmationVisibility() =>
-      isPasswordConfirmationObscure == true
-          ? isPasswordConfirmationObscure = false
-          : isPasswordConfirmationObscure = true;
+      isPasswordConfirmationObscure = !isPasswordConfirmationObscure;
 }
