@@ -45,3 +45,9 @@ app.*.map.json
 
 # Environment configuration
 .env
+
+
+# Ignore ios, windows, linux
+ios/
+windows/
+linux/
