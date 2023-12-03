@@ -15,7 +15,7 @@ ThemeData lightTheme = ThemeData(
     bodySmall: TextStyle(color: Colors.white),
   ),
   dialogTheme: const DialogTheme(
-    backgroundColor: Colors.white, 
+    surfaceTintColor: Colors.white,
   ),
   cardTheme: const CardTheme(
     surfaceTintColor: Colors.white

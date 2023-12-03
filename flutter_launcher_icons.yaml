@@ -1,9 +1,9 @@
 flutter_launcher_icons:
-  image_path: "assets/images/logo_full_white_economiza_no_bg.png"
+  image_path: "assets/images/logo_red.png"
   android: true
   min_sdk_android: 21 
   web:
     generate: true
-    image_path: "assets/images/logo_simple_white_economiza_no_bg.png"
+    image_path: "assets/images/logo_red.png"
     background_color: "#hexcode"
     theme_color: "#hexcode"

@@ -1,5 +1,5 @@
 import 'package:economiza_sc/models/market.dart';
-import 'package:economiza_sc/modules/app_module.dart';
+import 'package:economiza_sc/modules/core_module.dart';
 import 'package:economiza_sc/services/markets_service.dart';
 import 'package:economiza_sc/stores/markets_store.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -16,7 +16,7 @@ void main() {
 
   setUp(() {
     reset(mockMarketsService);
-    Modular.init(AppModule());
+    Modular.init(CoreModule());
     Modular.replaceInstance<MarketsService>(mockMarketsService);
   });
 

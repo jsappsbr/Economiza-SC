@@ -40,8 +40,11 @@ class _HomePageState extends State<HomePage> {
     return Observer(builder: (context) {
       return Scaffold(
         appBar: AppBar(
-          leading: Image.asset('assets/images/logo_simple_economiza.png'),
-          leadingWidth: 50,
+          leading: Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+            child: Image.asset('assets/images/logo_white.png'),
+          ),
+          leadingWidth: 35,
           title: const Text('Economiza SC', style: TextStyle(color: Colors.white)),
           actions: const [
             CustomPopUpMenu(),
@@ -49,8 +52,8 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            _productsStore.cleanProducts();  
-            _productsStore.fetchProducts(); 
+            _productsStore.cleanProducts();
+            _productsStore.fetchProducts();
           },
           child: const Icon(Icons.search),
         ),

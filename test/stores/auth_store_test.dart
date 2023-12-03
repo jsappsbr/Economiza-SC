@@ -1,5 +1,5 @@
 import 'package:economiza_sc/models/user.dart';
-import 'package:economiza_sc/modules/app_module.dart';
+import 'package:economiza_sc/modules/core_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -17,7 +17,7 @@ void main() {
 
   setUp(() {
     reset(mockAuthService);
-    Modular.init(AppModule());
+    Modular.init(CoreModule());
     Modular.replaceInstance<AuthService>(mockAuthService);
   });
 
