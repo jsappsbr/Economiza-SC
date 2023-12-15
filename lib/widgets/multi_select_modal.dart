@@ -57,9 +57,15 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
         backgroundColor: Colors.white,
         title: Row(
           children: [
-            Text(
-              'Selecione as opções desejadas:',
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
+            Expanded(
+              flex: 2,
+              child: Text(
+                'Selecione as opções desejadas:',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(color: Colors.black),
+              ),
             ),
             const Spacer(),
             MouseRegion(
@@ -67,7 +73,7 @@ class _MultiSelectModalState extends State<MultiSelectModal> {
               child: IconButton(
                 onPressed: _closeModal,
                 icon: const Icon(Icons.clear, color: Colors.black),
-                hoverColor: Colors.grey.shade200, 
+                hoverColor: Colors.grey.shade200,
               ),
             ),
           ],
