@@ -14,11 +14,10 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final _signUpStore = Modular.get<SignUpStore>();
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController(text: "Teste");
-  final _emailController = TextEditingController(text: "test@test.com");
-  final _passwordController = TextEditingController(text: "12345678");
-  final _passwordConfirmationController =
-      TextEditingController(text: "12345678");
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _passwordConfirmationController = TextEditingController();
 
   _handleSubmit() {
     if (!_formKey.currentState!.validate()) {
