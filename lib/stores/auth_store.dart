@@ -55,8 +55,6 @@ abstract class AuthStoreBase with Store {
     try {
       isFetchingCurrentUser = true;
 
-      await Future.delayed(const Duration(seconds: 1));
-
       String? token = await _authService.getApiToken();
 
       if (token != null && token.isNotEmpty) {

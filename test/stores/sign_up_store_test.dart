@@ -8,6 +8,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'dart:io';
 
 @GenerateNiceMocks([
   MockSpec<SignUpService>(),
@@ -98,12 +99,12 @@ void main() {
 
     group('when the sign up fails', () {
       test('it do not navigates to the login page', () async {
-        await runFailingAction(HttpException(StatusCode.found, 'found'));
+        await runFailingAction(HttpException(HttpStatus.found, 'found'));
         verifyNever(mockNavigator.navigate(any));
       });
 
       group('because the user already exists', () {
-        setUp(() => runFailingAction(HttpException(StatusCode.found, 'found')));
+        setUp(() => runFailingAction(HttpException(HttpStatus.found, 'found')));
 
         test('it shows an error snack message', () {
           verify(mockSnackBarService.show(
@@ -116,7 +117,7 @@ void main() {
       group('because the data is invalid', () {
         setUp(() {
           runFailingAction(HttpException(
-            StatusCode.unprocessableEntity,
+            HttpStatus.unprocessableEntity,
             'unprocessableEntity',
           ));
         });
@@ -132,7 +133,7 @@ void main() {
       group('because the server is down', () {
         setUp(() {
           runFailingAction(HttpException(
-            StatusCode.internalServerError,
+            HttpStatus.internalServerError,
             'internalServerError',
           ));
         });
@@ -148,7 +149,7 @@ void main() {
       group('because of an unknown error', () {
         setUp(() {
           runFailingAction(HttpException(
-            StatusCode.unknown,
+            null,
             'unknown',
           ));
         });

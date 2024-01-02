@@ -7,6 +7,8 @@ import 'dart:async' as _i4;
 
 import 'package:economiza_sc/models/user.dart' as _i2;
 import 'package:economiza_sc/services/auth_service.dart' as _i3;
+import 'package:economiza_sc/services/snack_bar_service.dart' as _i5;
+import 'package:flutter/material.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -112,4 +114,26 @@ class MockAuthService extends _i1.Mock implements _i3.AuthService {
         returnValue: _i4.Future<String?>.value(),
         returnValueForMissingStub: _i4.Future<String?>.value(),
       ) as _i4.Future<String?>);
+}
+
+/// A class which mocks [SnackBarService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSnackBarService extends _i1.Mock implements _i5.SnackBarService {
+  @override
+  _i4.Future<_i6.SnackBarClosedReason> show(
+    String? text, {
+    Duration? duration = const Duration(seconds: 3),
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #show,
+          [text],
+          {#duration: duration},
+        ),
+        returnValue: _i4.Future<_i6.SnackBarClosedReason>.value(
+            _i6.SnackBarClosedReason.action),
+        returnValueForMissingStub: _i4.Future<_i6.SnackBarClosedReason>.value(
+            _i6.SnackBarClosedReason.action),
+      ) as _i4.Future<_i6.SnackBarClosedReason>);
 }
