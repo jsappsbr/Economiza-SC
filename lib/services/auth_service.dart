@@ -5,22 +5,27 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
+import 'package:economiza_sc/exceptions/http_exception.dart';
 
 class AuthService {
   Future<User> login(String email, String password) async {
-    final deviceName = await _getDeviceName();
-    final api = Modular.get<Dio>();
+    try {
+      final deviceName = await _getDeviceName();
+      final api = Modular.get<Dio>();
 
-    var response = await api.post('/sanctum/token', data: {
-      'email': email,
-      'password': password,
-      'device_name': deviceName,
-    });
+      final response = await api.post('/sanctum/token', data: {
+        'email': email,
+        'password': password,
+        'device_name': deviceName,
+      });
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('api_token', response.data['token']);
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('api_token', response.data['token']);
 
-    return fetchCurrentUser();
+      return fetchCurrentUser();
+    } on DioException catch (e) {
+      throw HttpException.fromDioException(e);
+    }
   }
 
   Future<User> fetchCurrentUser() async {

@@ -6,14 +6,16 @@ class SnackBarService {
     String text, {
     Duration duration = const Duration(seconds: 3),
   }) {
-    final result = ScaffoldMessenger.of(
-      Modular.routerDelegate.navigatorKey.currentContext!,
-    ).showSnackBar(
-      SnackBar(
-        content: Text(text),
-        duration: duration,
-      ),
+    final snackBar = SnackBar(
+      content: Text(text),
+      duration: duration,
     );
+
+    final messenger = ScaffoldMessenger.of(
+      Modular.routerDelegate.navigatorKey.currentContext!,
+    );
+
+    final result = messenger.showSnackBar(snackBar);
 
     return result.closed;
   }
