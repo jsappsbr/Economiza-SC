@@ -21,6 +21,10 @@ class _HomePageState extends State<HomePage> {
   final _filtersStore = Modular.get<FiltersStore>();
   final _marketsStore = Modular.get<MarketsStore>();
 
+  Size get size => MediaQuery.of(context).size;
+  double get itemHeight => (size.height - kToolbarHeight - 24) / 2;
+  double get itemWidth => size.width / 2;
+
   @override
   void initState() {
     super.initState();
@@ -45,7 +49,8 @@ class _HomePageState extends State<HomePage> {
             child: Image.asset('assets/images/logo_white.png'),
           ),
           leadingWidth: 35,
-          title: const Text('Economiza SC', style: TextStyle(color: Colors.white)),
+          title:
+              const Text('Economiza SC', style: TextStyle(color: Colors.white)),
           actions: const [
             CustomPopUpMenu(),
           ],
@@ -66,8 +71,12 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
-                      decoration: const InputDecoration(hintText: 'Digite o nome de um produto'),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: Colors.black),
+                      decoration: const InputDecoration(
+                          hintText: 'Digite o nome de um produto'),
                       onChanged: _filtersStore.updateSearch,
                     ),
                   ),
@@ -77,58 +86,52 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                  controller: _productsStore.scrollController,
-                  itemCount: _productsStore.products.length < _productsStore.productsPerPage
-                      ? _productsStore.products.length
-                      : _productsStore.products.length + 1,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (index < _productsStore.products.length) {
-                      final product = _productsStore.products[index];
-                      final market = _marketsStore.markets.firstWhereOrNull((market) => market.id == product.marketId);
-                      return Card(
-                        child: Container(
-                          padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.network(product.picture, height: 120, width: 120),
-                                    ExpandButton(product: product),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      product.name,
-                                      style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.red),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      "R\$ ${product.price.toStringAsFixed(2)}",
-                                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
-                                    ),
-                                    Text(market?.name ?? '', style: const TextStyle(color: Colors.black)),
-                                  ],
-                                ),
-                              ),
-                            ],
+              child: GridView.count(
+                crossAxisCount: 2,
+                childAspectRatio: itemWidth / itemHeight,
+                padding: const EdgeInsets.all(4),
+                controller: _productsStore.scrollController,
+                children: _productsStore.products.map((product) {
+                  final productMarket = _marketsStore.markets.firstWhereOrNull(
+                      (market) => market.id == product.marketId);
+
+                  return SizedBox(
+                    height: 600,
+                    child: Card(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            product.name,
+                            style: Theme.of(context).textTheme.labelMedium,
+                            maxLines: 2,
                           ),
-                        ),
-                      );
-                    } else {
-                      return null;
-                    }
-                  }),
+                          Expanded(
+                            child: Image.network(
+                              product.picture,
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                          Text(
+                            productMarket?.name ?? '',
+                            style: Theme.of(context).textTheme.labelSmall,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            'R\$ ${product.price.toStringAsFixed(2)}',
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
             ),
-            _productsStore.productsLoading ? const LinearProgressIndicator(color: Colors.grey, backgroundColor: Colors.white60) : Container(),
+            _productsStore.productsLoading
+                ? const LinearProgressIndicator(
+                    color: Colors.grey, backgroundColor: Colors.white60)
+                : Container(),
           ],
         ),
       );
